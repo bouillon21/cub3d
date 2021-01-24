@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/01/21 17:09:10 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/01/24 14:20:22 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@
 # include <mlx.h>
 # include <fcntl.h>
 
-#define scale 10
-
 typedef struct	s_canvas
 {
 	void		*img;
@@ -30,14 +28,17 @@ typedef struct	s_canvas
 	int			endian;
 }				t_canvas;
 
-typedef struct cub3D
+typedef struct s_player
 {
-  // t_map map;
-  t_canvas canvas;
-	void	*mlx;
-	void	*mlx_win;
-}               t_cub3D;
+  int x;
+  int y;
+  int pres_w;
+  int pres_a;
+  int pres_s;
+  int pres_d;
+  int speed;
 
+}               t_player;
 
 typedef struct	s_map
 {
@@ -45,11 +46,26 @@ typedef struct	s_map
 	char		**map;
 }			t_map;
 
+typedef struct s_point
+{
+  float x;
+  float y;
+}               t_point;
+
+typedef struct cub3D
+{
+  // t_map map;
+  t_canvas canvas;
+  t_player player;
+	void	*mlx;
+	void	*mlx_win;
+}               t_cub3D;
 
 #define mapWidth 24
 #define mapHeight 24
-#define screenWidth 640
-#define screenHeight 480
+#define screenWidth 600
+#define screenHeight 600
+#define scale 10
 
 int  worldMap[mapWidth][mapHeight]=
 {
