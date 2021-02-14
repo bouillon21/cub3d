@@ -6,7 +6,7 @@
 #    By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/19 14:50:25 by cshelli           #+#    #+#              #
-#    Updated: 2021/01/27 21:27:56 by cshelli          ###   ########.fr        #
+#    Updated: 2021/02/11 17:44:42 by cshelli          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,9 @@ HEADER	= includes/
 
 CC		= @gcc
 
-SRCS	= main.c parser.c draw.c
+SRC_DIR	= src/
+
+SRCS	= $(SRC_DIR)cub3D.c $(SRC_DIR)parser.c $(SRC_DIR)draw.c $(SRC_DIR)move.c
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -42,6 +44,8 @@ clean:
 fclean: clean
 	@/bin/rm -f $(NAME)
 	@echo '$(ccred)$(NAME) file delete$(cwhite)'
+
+re: fclean $(NAME)
 
 cgreen=$(shell echo "\033[0;32m")
 ccred=$(shell echo "\033[0;31m")

@@ -6,7 +6,7 @@
 #    By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/10 19:15:16 by cshelli           #+#    #+#              #
-#    Updated: 2021/01/27 21:27:06 by cshelli          ###   ########.fr        #
+#    Updated: 2021/01/28 14:50:34 by cshelli          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRCS			=	ft_isalnum.c ft_isprint.c ft_memcmp.c  ft_putchar_fd.c ft_split.c \
 OBJS			= $(SRCS:.c=.o)
 
 CC				= @gcc
-RM				= rm -f
+RM				= @rm -f
 CFLAGS			= -Wall -Wextra -Werror -I $(HEADER)
 
 NAME			= libft.a

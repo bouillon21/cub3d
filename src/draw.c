@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 18:20:09 by cshelli           #+#    #+#             */
-/*   Updated: 2021/01/27 20:55:33 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/12 19:43:39 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
-void	draw_square(const int x,const int y,int color, t_canvas *img)
 
+void	draw_square(const int x,const int y,int color, t_canvas *img)
 {
 	int i;
 	int j;
@@ -35,44 +35,44 @@ void	draw_square(const int x,const int y,int color, t_canvas *img)
 	}
 }
 
-void draw_map(t_cub3D *cub ,int color)
-{
-	int i;
-	int j;
-	int run;
-	int run2;
+// void draw_map(t_cub3D *cub ,int color)
+// {
+// 	int i;
+// 	int j;
+// 	int run;
+// 	int run2;
 
-	i = 0;
-	j = 0;
-	run = 0;
-	run2 = 0;
-	while (i < 12)
-	{
-		while (j < 27)
-		{
-			if (cub->map.map[i][j] == '1')
-				draw_square(j + run, i + run2, color, &cub->canvas);
-			run += scale;
-			j++;
-		}
-		j = 0;
-		run = 0;
-		run2 += scale;
-		i++;
-	}
-}
+// 	i = 0;
+// 	j = 0;
+// 	run = 0;
+// 	run2 = 0;
+// 	while (i < 12)
+// 	{
+// 		while (j < 26)
+// 		{
+// 			if (cub->map.map[i][j] == '1')
+// 				draw_square(j + run, i + run2, color, &cub->canvas);
+// 			run += scale;
+// 			j++;
+// 		}
+// 		j = 0;
+// 		run = 0;
+// 		run2 += scale;
+// 		i++;
+// 	}
+// }
 
-void draw_player(t_cub3D *cub, int color)
-{
-	int i;
-	int j;
+// void draw_player(t_cub3D *cub, int color)
+// {
+// 	int i;
+// 	int j;
 
-	i = -1;
-	j = -1;
-	while (++i <= scale/2)
-	{
-		while (++j <= scale/2)
-			my_mlx_pixel_put(&cub->canvas, cub->player.x + i, cub->player.y + j, color);
-		j = -1;
-	}
-}
+// 	i = -1;
+// 	j = -1;
+// 	while (++i <= scale/2)
+// 	{
+// 		while (++j <= scale/2)
+// 			my_mlx_pixel_put(&cub->canvas, cub->player.x + i, cub->player.y + j, color);
+// 		j = -1;
+// 	}
+// }
