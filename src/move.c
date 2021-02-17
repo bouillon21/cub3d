@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 15:40:57 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/14 18:40:12 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/15 17:28:17 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,30 +49,30 @@ void move_player(t_cub3D *cub)
 {
 	if (cub->player.pres_w)
 	{
-		if(cub->map.map[(int)(cub->player.posX + cub->player.dirX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX + cub->player.dirX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
 			cub->player.posX += cub->player.dirX * cub->player.moveSpeed;
-		if(cub->map.map[(int)(cub->player.posX)][(int)(cub->player.posY + cub->player.dirY * cub->player.moveSpeed)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY + cub->player.dirY * cub->player.moveSpeed)] == '0')
 			cub->player.posY += cub->player.dirY * cub->player.moveSpeed;
 	}
 	if (cub->player.pres_s)
 	{
-		if(cub->map.map[(int)(cub->player.posX - cub->player.dirX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX - cub->player.dirX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
 			cub->player.posX -= cub->player.dirX * cub->player.moveSpeed;
-		if(cub->map.map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.dirY * cub->player.moveSpeed)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.dirY * cub->player.moveSpeed)] == '0')
 			cub->player.posY -= cub->player.dirY * cub->player.moveSpeed;
 	}
 	if (cub->player.pres_a)
 	{
-		if(cub->map.map[(int)(cub->player.posX - cub->player.planeX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX - cub->player.planeX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
 			cub->player.posX -= cub->player.planeX * cub->player.moveSpeed;
-		if(cub->map.map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.planeY * cub->player.moveSpeed)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.planeY * cub->player.moveSpeed)] == '0')
 			cub->player.posY -= cub->player.planeY * cub->player.moveSpeed;
 	}
 	if (cub->player.pres_d)
 	{
-		if(cub->map.map[(int)(cub->player.posX + cub->player.planeX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX + cub->player.planeX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
 			cub->player.posX += cub->player.planeX * cub->player.moveSpeed;
-		if(cub->map.map[(int)(cub->player.posX)][(int)(cub->player.posY + cub->player.planeY * cub->player.moveSpeed)] == '0')
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY + cub->player.planeY * cub->player.moveSpeed)] == '0')
 			cub->player.posY += cub->player.planeY * cub->player.moveSpeed;
 	}
 }

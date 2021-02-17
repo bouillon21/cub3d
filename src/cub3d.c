@@ -6,39 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/14 18:47:08 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/17 20:43:58 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
-
-int worldMap[mapWidth][mapHeight]=
-{
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,2,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
-  {1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-  {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
-};
 
 void init(t_cub3D *cub)
 {
@@ -50,15 +22,15 @@ void init(t_cub3D *cub)
 	cub->player.posX = 11;
 	cub->player.posY = 2;
 	cub->player.speed = 0.1;
-  cub->player.moveSpeed = 0.1;
-	cub->player.rotSpeed = 0.1;
+	cub->player.moveSpeed = 0.4;
+	cub->player.rotSpeed = 0.4;
 
 	cub->player.dirX = -1;
 	cub->player.dirY = 0;
 
 	cub->player.planeX = 0;
 	cub->player.planeY = 0.66;
-  cub->player.rot = 0;
+	cub->player.rot = 0;
 }
 
 void raycast(t_cub3D *cub)
@@ -67,7 +39,6 @@ void raycast(t_cub3D *cub)
   
 	for(int x = 0; x < screenWidth; x++)
   {
-    // printf("%d", x);
     // calculate ray position and direction
       double cameraX = 2 * x / (double)screenWidth - 1; //x-coordinate in camera space
       double rayDirX = cub->player.dirX + cub->player.planeX * cameraX;
@@ -130,7 +101,7 @@ void raycast(t_cub3D *cub)
         }
         //Check if ray has hit a wall
         // if(worldMap[mapX][mapY] > 0) hit = 1;
-        if(cub->map.map[mapX][mapY] != '0') hit = 1;
+        if(cub->pars.map[mapX][mapY] != '0') hit = 1;
 
       }
       //Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
@@ -151,7 +122,12 @@ void raycast(t_cub3D *cub)
 
 //отрисовка
       int y;
-      y = drawStart;
+      y = 0;
+      while (y <= drawStart)
+      {
+        my_mlx_pixel_put(&cub->canvas,x ,y, 0x003b5eeb);
+        y++;
+      }
       while (y < drawEnd)
       {
         if (side == 1)
@@ -188,16 +164,16 @@ int main()
 {
 	t_cub3D cub;
 
-	parser(&cub.map);
-	#pragma region //init mlx
-	cub.mlx = mlx_init();
-	cub.mlx_win = mlx_new_window(cub.mlx, screenWidth, screenHeight, "Hi");
-	cub.canvas.img = mlx_new_image(cub.mlx, screenWidth, screenHeight);
-	cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
-	#pragma endregion
-	init(&cub);
-	mlx_hook(cub.mlx_win, 2, 1L<<0, &press_key, &cub);
-	mlx_hook(cub.mlx_win, 3, 1L<<1, &release_key, &cub);
-	mlx_loop_hook(cub.mlx, &draw_img, &cub);
-	mlx_loop(cub.mlx);
+	parser(&cub.pars);
+	// #pragma region //init mlx
+	// cub.mlx = mlx_init();
+	// cub.mlx_win = mlx_new_window(cub.mlx, screenWidth, screenHeight, "Hi");
+	// cub.canvas.img = mlx_new_image(cub.mlx, screenWidth, screenHeight);
+	// cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
+	// #pragma endregion
+	// init(&cub);
+	// mlx_hook(cub.mlx_win, 2, 1L<<0, &press_key, &cub);
+	// mlx_hook(cub.mlx_win, 3, 1L<<1, &release_key, &cub);
+	// mlx_loop_hook(cub.mlx, &draw_img, &cub);
+	// mlx_loop(cub.mlx);
 }
