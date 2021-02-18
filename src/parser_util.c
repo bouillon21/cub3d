@@ -1,29 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   parser_util.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/05 15:27:56 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/17 20:53:53 by cshelli          ###   ########.fr       */
+/*   Created: 2021/02/18 19:57:52 by cshelli           #+#    #+#             */
+/*   Updated: 2021/02/18 20:10:18 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "cub3D.h"
 
-int		ft_strncmp(char *s1, char *s2, size_t n)
+int		check_one(char *line)
 {
-	size_t i;
+	int i;
 
 	i = 0;
-	while (i < n)
+	while (line[i] == ' ')
+		i++;
+	return(line[i] == '1' ? 1 : 0);
+}
+
+void	free_array(t_cub3D *cub, char ***mas)
+{
+	int i;
+
+	i = 0;
+	while ((*mas)[i])
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-		if (!s1[i] || !s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		free((*mas)[i]);
 		i++;
 	}
-	return (0);
+	free(*mas);
+}
+
+void	exit_error(char *str)
+{
+	write(1, "Error\n", 6);
+	write(1, str, ft_strlen(str));
+	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/17 20:43:58 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/18 20:36:30 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void init(t_cub3D *cub)
 	cub->player.pres_s = 0;
 	cub->player.pres_d = 0;
 
-	cub->player.posX = 11;
-	cub->player.posY = 2;
+	cub->player.posX = 5;
+	cub->player.posY = 22;
 	cub->player.speed = 0.1;
-	cub->player.moveSpeed = 0.4;
-	cub->player.rotSpeed = 0.4;
+	cub->player.moveSpeed = 0.1;
+	cub->player.rotSpeed = 0.1;
 
 	cub->player.dirX = -1;
 	cub->player.dirY = 0;
@@ -164,16 +164,17 @@ int main()
 {
 	t_cub3D cub;
 
+	cub.pars.fd = open("map.txt",O_RDONLY);
 	parser(&cub.pars);
-	// #pragma region //init mlx
-	// cub.mlx = mlx_init();
-	// cub.mlx_win = mlx_new_window(cub.mlx, screenWidth, screenHeight, "Hi");
-	// cub.canvas.img = mlx_new_image(cub.mlx, screenWidth, screenHeight);
-	// cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
-	// #pragma endregion
-	// init(&cub);
-	// mlx_hook(cub.mlx_win, 2, 1L<<0, &press_key, &cub);
-	// mlx_hook(cub.mlx_win, 3, 1L<<1, &release_key, &cub);
-	// mlx_loop_hook(cub.mlx, &draw_img, &cub);
-	// mlx_loop(cub.mlx);
+	#pragma region //init mlx
+	cub.mlx = mlx_init();
+	cub.mlx_win = mlx_new_window(cub.mlx, screenWidth, screenHeight, "Hi");
+	cub.canvas.img = mlx_new_image(cub.mlx, screenWidth, screenHeight);
+	cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
+	#pragma endregion
+	init(&cub);
+	mlx_hook(cub.mlx_win, 2, 1L<<0, &press_key, &cub);
+	mlx_hook(cub.mlx_win, 3, 1L<<1, &release_key, &cub);
+	mlx_loop_hook(cub.mlx, &draw_img, &cub);
+	mlx_loop(cub.mlx);
 }

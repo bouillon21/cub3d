@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/17 20:43:24 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/18 20:09:17 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,8 @@ void move_player(t_cub3D *cub);
 int release_key(int keycode, t_cub3D *cub);
 int press_key(int keycode, t_cub3D *cub);
 
+int check_one(char *line);
+void free_array(t_cub3D *cub, char ***mas);
+void	exit_error(char *str);
 
 #endif
