@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 18:20:09 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/12 19:43:39 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/19 19:38:16 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,30 @@ void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-void	draw_square(const int x,const int y,int color, t_canvas *img)
+int		my_mlx_pixel_get(t_canvas *texture, int x, int y)
 {
-	int i;
-	int j;
+	char	*dst;
+	int		color;
 
-	i = -1;
-	j = -1;
-	while (++i <= scale)
-	{
-		while (++j <= scale) 
-			my_mlx_pixel_put(img, x + i, y + j, color);
-		j = -1;
-	}
+	dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
+	color = *(unsigned int*)dst;
+	return(color);
 }
+
+// void	draw_square(const int x,const int y,int color, t_canvas *img)
+// {
+// 	int i;
+// 	int j;
+
+// 	i = -1;
+// 	j = -1;
+// 	while (++i <= scale)
+// 	{
+// 		while (++j <= scale) 
+// 			my_mlx_pixel_put(img, x + i, y + j, color);
+// 		j = -1;
+// 	}
+// }
 
 // void draw_map(t_cub3D *cub ,int color)
 // {

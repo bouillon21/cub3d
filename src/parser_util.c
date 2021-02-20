@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 19:57:52 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/18 20:10:18 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/19 14:33:36 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	free_array(t_cub3D *cub, char ***mas)
 	free(*mas);
 }
 
-void	exit_error(char *str)
+void	error_message(char *str)
 {
 	write(1, "Error\n", 6);
 	write(1, str, ft_strlen(str));

@@ -1,8 +1,8 @@
 R 1920 1080
-NO ./texture/wolftex_xpm/WALL33.xpm
-SO texture/wolftex_xpm/WALL54.xpm
-WE texture/wolftex_xpm/WALL64.xpm
-EA texture/wolftex_xpm/WALL68.xpm
+NO texture/ahegao_xpm/3893522.xpm
+SO texture/ahegao_xpm/581739463571661590445879.xpm
+WE texture/ahegao_xpm/b7747c4222f9ed7ebb5997d80570aef1.xpm
+EA texture/ahegao_xpm/unnamed.xpm
 S ./path_to_the_sprite_texture
 F 220,100,0
 C 225,30,0

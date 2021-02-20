@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/18 20:09:17 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/20 18:21:01 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,17 @@
 # include "libft.h"
 # include "get_next_line.h"
 
-#define mapWidth 24
-#define mapHeight 24
-#define screenWidth 1500
-#define screenHeight 1080
-#define scale 30
-
 typedef struct	s_canvas
 {
+	void		*mlx;
+	void		*mlx_win;
 	void		*img;
 	char		*addr;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	int			width;
+	int			height;
 }				t_canvas;
 
 typedef struct	s_player
@@ -75,7 +73,7 @@ typedef struct	s_player
 	int			side;
 	int			drawStart;
 	int			drawEnd;
-}					t_player;
+}				t_player;
 
 typedef struct	s_pars
 {
@@ -95,26 +93,36 @@ typedef struct	s_pars
 typedef struct	cub3D
 {
 	t_pars		pars;
-	t_canvas	canvas;
 	t_player	player;
-	void		*mlx;
-	void		*mlx_win;
+	t_canvas	canvas;
+	t_canvas	textNO;
+	t_canvas	textSO;
+	t_canvas	textWE;
+	t_canvas	textEA;
 }				t_cub3D;
 
 
-void parser(t_cub3D *cub);
-void draw_square(const int x,const int y,int color, t_canvas *img);
-void draw_map(t_cub3D *cub ,int color);
-void my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
-void draw_player(t_cub3D *cub, int color);
+void	parser(t_cub3D *cub);
+void	draw_square(const int x,const int y,int color, t_canvas *img);
+void	draw_map(t_cub3D *cub ,int color);
+void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
+int		my_mlx_pixel_get(t_canvas *texture, int x, int y);
+void	draw_player(t_cub3D *cub, int color);
 
-void rotation_player(t_cub3D *cub);
-void move_player(t_cub3D *cub);
-int release_key(int keycode, t_cub3D *cub);
-int press_key(int keycode, t_cub3D *cub);
+void	rotation_player(t_cub3D *cub);
+void	move_player(t_cub3D *cub);
+int		release_key(int keycode, t_cub3D *cub);
+int		press_key(int keycode, t_cub3D *cub);
 
-int check_one(char *line);
-void free_array(t_cub3D *cub, char ***mas);
-void	exit_error(char *str);
+int		check_one(char *line);
+void	free_array(t_cub3D *cub, char ***mas);
+void	error_message(char *str);
+
+void	init_texture(t_canvas *texture, char *way);
+void	valid_screen_size(t_cub3D *cub, char **mas);
+void	valid_save_texture(t_canvas *texture, t_pars *way, char **mas);
+void	valid_fc(t_cub3D *cub, char **mas, char param);
+void	save_fc(t_cub3D *cub, char **mas, char flag);
+
 
 #endif
