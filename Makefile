@@ -6,7 +6,7 @@
 #    By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/19 14:50:25 by cshelli           #+#    #+#              #
-#    Updated: 2021/02/19 19:48:20 by cshelli          ###   ########.fr        #
+#    Updated: 2021/02/21 15:31:34 by cshelli          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CC		= @gcc
 
 SRC_DIR	= src/
 
-SRCS	= $(SRC_DIR)cub3D.c $(SRC_DIR)parser.c $(SRC_DIR)parser_util.c $(SRC_DIR)draw.c $(SRC_DIR)move.c $(SRC_DIR)valid_param.c
+SRCS	= $(SRC_DIR)cub3D.c $(SRC_DIR)parser.c $(SRC_DIR)parser_util.c $(SRC_DIR)draw.c $(SRC_DIR)move.c $(SRC_DIR)valid_param.c $(SRC_DIR)valid_map.c
 
 OBJS	= $(SRCS:.c=.o)
 

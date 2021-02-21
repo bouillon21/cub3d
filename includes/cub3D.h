@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/20 18:21:01 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/21 18:38:54 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,12 @@ typedef struct	s_canvas
 	int			width;
 	int			height;
 }				t_canvas;
+
+typedef struct	s_sprite
+{
+	float		x;
+	float		y;
+}				t_sprite;
 
 typedef struct	s_player
 {
@@ -99,8 +105,16 @@ typedef struct	cub3D
 	t_canvas	textSO;
 	t_canvas	textWE;
 	t_canvas	textEA;
+	t_canvas	textS;
+	t_sprite	*sprites;
+	int			count_sprites;
 }				t_cub3D;
 
+typedef struct		s_pair
+{
+	double	first;
+	int		second;
+}					t_pair;
 
 void	parser(t_cub3D *cub);
 void	draw_square(const int x,const int y,int color, t_canvas *img);
@@ -121,6 +135,7 @@ void	error_message(char *str);
 void	init_texture(t_canvas *texture, char *way);
 void	valid_screen_size(t_cub3D *cub, char **mas);
 void	valid_save_texture(t_canvas *texture, t_pars *way, char **mas);
+void	valid_map(t_cub3D *cub);
 void	valid_fc(t_cub3D *cub, char **mas, char param);
 void	save_fc(t_cub3D *cub, char **mas, char flag);
 

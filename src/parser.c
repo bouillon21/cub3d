@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/20 18:35:53 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/21 16:07:45 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	map(t_cub3D *cub, t_list **head, int size)
 		tmp = tmp->next;
 		i++;
 	}
+	valid_map(cub);
 }
 
 void	save_fc(t_cub3D *cub, char **mas, char flag)
@@ -95,4 +96,6 @@ void	parser(t_cub3D *cub)
 		free(line);
 	}
 	map(cub, &head, ft_lstsize(head));
+	// while (1)
+	// {}
 }

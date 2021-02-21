@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/20 18:30:34 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/21 21:40:12 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ void init(t_cub3D *cub)
 	init_texture(&cub->textSO, cub->pars.SO);
 	init_texture(&cub->textWE, cub->pars.WE);
 	init_texture(&cub->textEA, cub->pars.EA);
+	init_texture(&cub->textS, cub->pars.S);
 
 	cub->player.pres_w = 0;
 	cub->player.pres_a = 0;
 	cub->player.pres_s = 0;
 	cub->player.pres_d = 0;
 
-	cub->player.posX = 2;
-	cub->player.posY = 2;
+	cub->player.posX = 2.5;
+	cub->player.posY = 1.5;
 	cub->player.speed = 0.1;
-	cub->player.moveSpeed = 0.1;
+	cub->player.moveSpeed = 0.11;
 	cub->player.rotSpeed = 0.1;
 
 	cub->player.dirX = -1;
@@ -38,11 +39,51 @@ void init(t_cub3D *cub)
 	cub->player.rot = 0;
 }
 
+void	sort_order(t_pair *orders, int amount)
+{
+	t_pair	tmp;
+	for (int i = 0; i < amount; i++)
+	{
+		for (int j = 0; j < amount - 1; j++)
+		{
+			if (orders[j].first > orders[j + 1].first)
+			{
+				tmp.first = orders[j].first;
+				tmp.second = orders[j].second;
+				orders[j].first = orders[j + 1].first;
+				orders[j].second = orders[j + 1].second;
+				orders[j + 1].first = tmp.first;
+				orders[j + 1].second = tmp.second;
+			}
+		}
+	}
+}
+void	sortSprites(int *order, double *dist, int amount)
+{
+	t_pair	*sprites;
+	//std::vector<std::pair<double, int>> sprites(amount);
+	sprites = (t_pair*)malloc(sizeof(t_pair) * amount);
+	for (int i = 0; i < amount; i++)
+	{
+		sprites[i].first = dist[i];
+		sprites[i].second = order[i];
+	}
+	sort_order(sprites, amount);
+	//std::sort(sprites.begin(), sprites.end());
+	for (int i = 0; i < amount; i++)
+	{
+		dist[i] = sprites[amount - i - 1].first;
+		order[i] = sprites[amount - i - 1].second;
+	}
+	free(sprites);
+}
+
 void raycast(t_cub3D *cub)
 {
 	int i;
-
-	for (int x = 0; x < cub->pars.sWidth; x++)
+	double ZBuffer[cub->pars.sWidth];
+#pragma region								   // стены
+	for (int x = 0; x < cub->pars.sWidth; x++) // стены
 	{
 		// calculate ray position and direction
 		double cameraX = 2 * x / (double)cub->pars.sWidth - 1; //x-coordinate in camera space
@@ -106,7 +147,7 @@ void raycast(t_cub3D *cub)
 			}
 			//Check if ray has hit a wall
 			// if(worldMap[mapX][mapY] > 0) hit = 1;
-			if (cub->pars.map[mapX][mapY] != '0')
+			if (cub->pars.map[mapX][mapY] == '1')
 				hit = 1;
 		}
 		//Calculate distance projected on camera direction (Euclidean distance will give fisheye effect!)
@@ -178,6 +219,7 @@ void raycast(t_cub3D *cub)
 		// Starting texture coordinate
 		double texPos = (drawStart - cub->pars.sHeight / 2 + lineHeight / 2) * step;
 
+		//отрисовка
 		int texY;
 		int color;
 		int y;
@@ -188,7 +230,7 @@ void raycast(t_cub3D *cub)
 			y++;
 		}
 
-		while(y < drawEnd)
+		while (y < drawEnd)
 		{
 			texY = (int)texPos;
 			texPos += step;
@@ -210,49 +252,120 @@ void raycast(t_cub3D *cub)
 			y++;
 		}
 
-		//отрисовка
-		while (y < cub->pars.sHeight)
+		while (y < cub->pars.sHeight - 1)
 		{
 			my_mlx_pixel_put(&cub->canvas, x, y, 0x00CF74D3);
 			y++;
 		}
+		ZBuffer[x] = perpWallDist; //perpendicular distance is used
 	}
-}
+#pragma endregion
 
-int draw_img(t_cub3D *cub)
-{
-	mlx_clear_window(cub->canvas.mlx, cub->canvas.mlx_win);
-	mlx_destroy_image(cub->canvas.mlx, cub->canvas.img);
-	cub->canvas.img = mlx_new_image(cub->canvas.mlx, cub->pars.sWidth, cub->pars.sHeight);
-	move_player(cub);
-	rotation_player(cub);
-	raycast(cub);
-	mlx_put_image_to_window(cub->canvas.mlx, cub->canvas.mlx_win, cub->canvas.img, 0, 0);
-}
+#pragma region //спрайты
 
-void	init_texture(t_canvas *texture, char *way)
-{
-	texture->mlx = mlx_init();
-	if (!(texture->img = mlx_xpm_file_to_image(&texture->mlx, way, &texture->width, &texture->height)))
-		error_message("texture");
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
-}
+//arrays used to sort the sprites
+int spriteOrder[cub->count_sprites];
+double spriteDistance[cub->count_sprites];
+	for (int i = 0; i < cub->count_sprites; i++)
+	{
+		spriteOrder[i] = i;
+		spriteDistance[i] = ((cub->player.posX - cub->sprites[i].x) * (cub->player.posX - cub->sprites[i].x) + (cub->player.posY - cub->sprites[i].y) * (cub->player.posY - cub->sprites[i].y)); //sqrt not taken, unneeded
+	}
+	// sortSprites(spriteOrder, spriteDistance, cub->count_sprites);
 
-int main()
-{
-	t_cub3D cub;
+	//after sorting the sprites, do the projection and draw them
+	for (int i = 0; i < cub->count_sprites; i++)
+	{
+		//translate sprite position to relative to camera
+		double spriteX = cub->sprites[spriteOrder[i]].x - cub->player.posX;
+		double spriteY = cub->sprites[spriteOrder[i]].y - cub->player.posY;
 
-	cub.pars.fd = open("map_ahegao.txt", O_RDONLY);
-	parser(&cub.pars);
-	init(&cub);
-// #pragma region //init mlx
-// 	cub.canvas.mlx = mlx_init();
-// 	cub.canvas.mlx_win = mlx_new_window(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight, "Hi");
-// 	cub.canvas.img = mlx_new_image(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight);
-// 	cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
-// #pragma endregion
-// 	mlx_hook(cub.canvas.mlx_win, 2, 1L << 0, &press_key, &cub);
-// 	mlx_hook(cub.canvas.mlx_win, 3, 1L << 1, &release_key, &cub);
-// 	mlx_loop_hook(cub.canvas.mlx, &draw_img, &cub);
-// 	mlx_loop(cub.canvas.mlx);
-}
+		//transform sprite with the inverse camera matrix
+		// [ planeX   dirX ] -1                                       [ dirY      -dirX ]
+		// [               ]       =  1/(planeX*dirY-dirX*planeY) *   [                 ]
+		// [ planeY   dirY ]                                          [ -planeY  planeX ]
+
+		double invDet = 1.0 / (cub->player.planeX * cub->player.dirY - cub->player.dirX * cub->player.planeY); //required for correct matrix multiplication
+
+		double transformX = invDet * (cub->player.dirY * spriteX - cub->player.dirX * spriteY);
+		double transformY = invDet * (-cub->player.planeY * spriteX + cub->player.planeX * spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(spriteDistance[i])
+
+		int spriteScreenX = (int)((cub->pars.sWidth / 2) * (1 + transformX / transformY));
+
+//parameters for scaling and moving the sprites
+//calculate height of the sprite on screen
+      int spriteHeight = abs((int)(cub->pars.sHeight / (transformY))); //using 'transformY' instead of the real distance prevents fisheye
+      //calculate lowest and highest pixel to fill in current stripe
+      int drawStartY = -spriteHeight / 2 + cub->pars.sHeight / 2;
+      if(drawStartY < 0) drawStartY = 0;
+      int drawEndY = spriteHeight / 2 + cub->pars.sHeight / 2;
+      if(drawEndY >= cub->pars.sHeight) drawEndY = cub->pars.sHeight - 1;
+
+      //calculate width of the sprite
+      int spriteWidth = abs( (int) (cub->pars.sHeight / (transformY)));
+      int drawStartX = -spriteWidth / 2 + spriteScreenX;
+      if(drawStartX < 0) drawStartX = 0;
+      int drawEndX = spriteWidth / 2 + spriteScreenX;
+      if(drawEndX >= cub->pars.sWidth) drawEndX = cub->pars.sWidth - 1;
+
+		//loop through every vertical stripe of the sprite on screen
+		for (int stripe = drawStartX; stripe < drawEndX; stripe++)
+		{
+			int texX = (int)(256 * (stripe - (-spriteWidth / 2 + spriteScreenX)) * cub->textS.width / spriteWidth) / 256;
+			//the conditions in the if are:
+			//1) it's in front of camera plane so you don't see things behind you
+			//2) it's on the screen (left)
+			//3) it's on the screen (right)
+			//4) ZBuffer, with perpendicular distance
+			if (transformY > 0 && stripe > 0 && stripe < cub->pars.sWidth && transformY < ZBuffer[stripe])
+				for (int y = drawStartY; y < drawEndY; y++) //for every pixel of the current stripe
+				{
+					int d = (y) * 256 - cub->pars.sHeight * 128 + spriteHeight * 128; //256 and 128 factors to avoid floats
+					int texY = ((d * cub->textS.height) / spriteHeight) / 256;
+					int color = my_mlx_pixel_get(&cub->textS, texX, texY);
+					if ((color & 0x00FFFFFF) != 0)
+						my_mlx_pixel_put(&cub->canvas, stripe, y, color);
+					// Uint32 color = texture[cub->sprites[spriteOrder[i]].texture][texWidth * texY + texX]; //get current color from the texture
+					// 	buffer[y][stripe] = color; //paint pixel if it isn't black, black is the invisible color
+				}
+		}
+	}
+	}
+
+	int draw_img(t_cub3D * cub)
+	{
+		mlx_clear_window(cub->canvas.mlx, cub->canvas.mlx_win);
+		mlx_destroy_image(cub->canvas.mlx, cub->canvas.img);
+		cub->canvas.img = mlx_new_image(cub->canvas.mlx, cub->pars.sWidth, cub->pars.sHeight);
+		move_player(cub);
+		rotation_player(cub);
+		raycast(cub);
+		mlx_put_image_to_window(cub->canvas.mlx, cub->canvas.mlx_win, cub->canvas.img, 0, 0);
+	}
+
+	void init_texture(t_canvas * texture, char *way)
+	{
+		texture->mlx = mlx_init();
+		if (!(texture->img = mlx_xpm_file_to_image(&texture->mlx, way, &texture->width, &texture->height)))
+			error_message("texture");
+		texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
+	}
+
+	int main()
+	{
+		t_cub3D cub;
+
+		cub.pars.fd = open("map_ahegao.txt", O_RDONLY);
+		parser(&cub.pars);
+		init(&cub);
+#pragma region //init mlx
+		cub.canvas.mlx = mlx_init();
+		cub.canvas.mlx_win = mlx_new_window(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight, "Hi");
+		cub.canvas.img = mlx_new_image(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight);
+		cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
+#pragma endregion
+		mlx_hook(cub.canvas.mlx_win, 2, 1L << 0, &press_key, &cub);
+		mlx_hook(cub.canvas.mlx_win, 3, 1L << 1, &release_key, &cub);
+		mlx_loop_hook(cub.canvas.mlx, &draw_img, &cub);
+		mlx_loop(cub.canvas.mlx);
+	}
