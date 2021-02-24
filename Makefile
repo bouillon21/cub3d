@@ -6,7 +6,7 @@
 #    By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/19 14:50:25 by cshelli           #+#    #+#              #
-#    Updated: 2021/02/21 15:31:34 by cshelli          ###   ########.fr        #
+#    Updated: 2021/02/23 19:50:37 by cshelli          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,19 @@ CC		= @gcc
 
 SRC_DIR	= src/
 
-SRCS	= $(SRC_DIR)cub3D.c $(SRC_DIR)parser.c $(SRC_DIR)parser_util.c $(SRC_DIR)draw.c $(SRC_DIR)move.c $(SRC_DIR)valid_param.c $(SRC_DIR)valid_map.c
+SRCS	= $(SRC_DIR)cub3D.c $(SRC_DIR)parser.c $(SRC_DIR)parser_util.c $(SRC_DIR)draw.c $(SRC_DIR)move.c $(SRC_DIR)valid_param.c $(SRC_DIR)valid_map.c $(SRC_DIR)cub_init.c $(SRC_DIR)dda_algorithm.c
 
 OBJS	= $(SRCS:.c=.o)
+
+START	= ./cub3D
 
 LIBFT	= libft/libft.a
 
 all: $(NAME) $(LIBFT)
+	@$(START)
 
-%.o: %.c
-	$(CC) -Wall -Wextra -Werror -Imlx -c $< -o $@
+.c.o:
+				${CC} -g ${CFLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) mlx/libmlx.a $(LIBFT) $(SRCS) -I $(HEADER) -Lmlx -lmlx -framework OpenGL -framework AppKit -o $(NAME)
@@ -45,7 +48,7 @@ fclean: clean
 	@/bin/rm -f $(NAME)
 	@echo '$(ccred)$(NAME) file delete$(cwhite)'
 
-re: fclean $(NAME)
+re: fclean all
 
 cgreen=$(shell echo "\033[0;32m")
 ccred=$(shell echo "\033[0;31m")

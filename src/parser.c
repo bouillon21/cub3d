@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/21 16:07:45 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/23 18:59:10 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ void	save_fc(t_cub3D *cub, char **mas, char flag)
 
 void	switch_(t_cub3D *cub, char **mas)
 {
-	if (mas[0] && !mas[3] && !cub->pars.sHeight && !ft_strncmp(mas[0], "R", 2))
+	if (mas[0] && !mas[3] && !S_HEIGHT && !ft_strncmp(mas[0], "R", 2))
 		valid_screen_size(cub, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.NO && !ft_strncmp(mas[0], "NO", 3))
-		cub->pars.NO = ft_strdup(mas[1]);
+		valid_init_texture(&cub->textNO, cub->pars.NO, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.SO && !ft_strncmp(mas[0], "SO", 3))
-		cub->pars.SO = ft_strdup(mas[1]);
+		valid_init_texture(&cub->textSO, cub->pars.SO, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.WE && !ft_strncmp(mas[0], "WE", 3))
-		cub->pars.WE = ft_strdup(mas[1]);
+		valid_init_texture(&cub->textWE, cub->pars.WE, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.EA && !ft_strncmp(mas[0], "EA", 3))
-		cub->pars.EA = ft_strdup(mas[1]);
+		valid_init_texture(&cub->textEA, cub->pars.EA, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.S && !ft_strncmp(mas[0], "S", 2))
-		cub->pars.S = ft_strdup(mas[1]);
+		valid_init_texture(&cub->textS, cub->pars.S, mas);
 	else if (mas[0] && !cub->pars.F[0] && !ft_strncmp(mas[0], "F", 2))
 		save_fc(cub, mas, 'F');
 	else if (mas[0] && !cub->pars.C[0] && !ft_strncmp(mas[0], "C", 2))
@@ -96,6 +96,4 @@ void	parser(t_cub3D *cub)
 		free(line);
 	}
 	map(cub, &head, ft_lstsize(head));
-	// while (1)
-	// {}
 }
