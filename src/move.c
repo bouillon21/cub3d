@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/28 15:40:57 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/23 19:01:19 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/25 14:28:06 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,31 @@ void move_player(t_cub3D *cub)
 {
 	if (cub->player.pres_w)
 	{
-		if(cub->pars.map[(int)(POS_X + DIR_X * cub->player.moveSpeed)][(int)(POS_Y)] == '0')
-			POS_X += DIR_X * cub->player.moveSpeed;
-		if(cub->pars.map[(int)(POS_X)][(int)(POS_Y + DIR_Y * cub->player.moveSpeed)] == '0')
-			POS_Y += DIR_Y * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX + cub->player.dirX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+			cub->player.posX += cub->player.dirX * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY + cub->player.dirY * cub->player.moveSpeed)] == '0')
+			cub->player.posY += cub->player.dirY * cub->player.moveSpeed;
 	}
 	if (cub->player.pres_s)
 	{
-		if(cub->pars.map[(int)(POS_X - DIR_X * cub->player.moveSpeed)][(int)(POS_Y)] == '0')
-			POS_X -= DIR_X * cub->player.moveSpeed;
-		if(cub->pars.map[(int)(POS_X)][(int)(POS_Y - DIR_Y * cub->player.moveSpeed)] == '0')
-			POS_Y -= DIR_Y * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX - cub->player.dirX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+			cub->player.posX -= cub->player.dirX * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.dirY * cub->player.moveSpeed)] == '0')
+			cub->player.posY -= cub->player.dirY * cub->player.moveSpeed;
 	}
 	if (cub->player.pres_a)
 	{
-		if(cub->pars.map[(int)(POS_X - PLANE_X * cub->player.moveSpeed)][(int)(POS_Y)] == '0')
-			POS_X -= PLANE_X * cub->player.moveSpeed;
-		if(cub->pars.map[(int)(POS_X)][(int)(POS_Y - PLANE_Y * cub->player.moveSpeed)] == '0')
-			POS_Y -= PLANE_Y * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX - cub->player.planeX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+			cub->player.posX -= cub->player.planeX * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY - cub->player.planeY * cub->player.moveSpeed)] == '0')
+			cub->player.posY -= cub->player.planeY * cub->player.moveSpeed;
 	}
 	if (cub->player.pres_d)
 	{
-		if(cub->pars.map[(int)(POS_X + PLANE_X * cub->player.moveSpeed)][(int)(POS_Y)] == '0')
-			POS_X += PLANE_X * cub->player.moveSpeed;
-		if(cub->pars.map[(int)(POS_X)][(int)(POS_Y + PLANE_Y * cub->player.moveSpeed)] == '0')
-			POS_Y += PLANE_Y * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX + cub->player.planeX * cub->player.moveSpeed)][(int)(cub->player.posY)] == '0')
+			cub->player.posX += cub->player.planeX * cub->player.moveSpeed;
+		if(cub->pars.map[(int)(cub->player.posX)][(int)(cub->player.posY + cub->player.planeY * cub->player.moveSpeed)] == '0')
+			cub->player.posY += cub->player.planeY * cub->player.moveSpeed;
 	}
 }
 
@@ -85,11 +85,11 @@ void rotation_player(t_cub3D *cub)
 	float oldPlaneX;
 	float rotSpeed;
 
-	oldDirX = DIR_X;
-	oldPlaneX = PLANE_X;
+	oldDirX = cub->player.dirX;
+	oldPlaneX = cub->player.planeX;
 	rotSpeed = cub->player.rotSpeed * cub->player.rot;
-	DIR_X = DIR_X * cos(rotSpeed) - DIR_Y * sin(rotSpeed);
-	DIR_Y = oldDirX * sin(rotSpeed) + DIR_Y * cos(rotSpeed);
-	PLANE_X = PLANE_X * cos(rotSpeed) - PLANE_Y * sin(rotSpeed);
-	PLANE_Y = oldPlaneX * sin(rotSpeed) + PLANE_Y * cos(rotSpeed);
+	cub->player.dirX = cub->player.dirX * cos(rotSpeed) - cub->player.dirY * sin(rotSpeed);
+	cub->player.dirY = oldDirX * sin(rotSpeed) + cub->player.dirY * cos(rotSpeed);
+	cub->player.planeX = cub->player.planeX * cos(rotSpeed) - cub->player.planeY * sin(rotSpeed);
+	cub->player.planeY = oldPlaneX * sin(rotSpeed) + cub->player.planeY * cos(rotSpeed);
 }

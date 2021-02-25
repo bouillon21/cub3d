@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 18:20:09 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/24 18:25:37 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/25 14:28:23 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,42 @@ int		my_mlx_pixel_get(t_canvas *texture, int x, int y)
 	dst = texture->addr + (y * texture->line_length + x * (texture->bits_per_pixel / 8));
 	color = *(unsigned int*)dst;
 	return(color);
+}
+
+void	draw_wall(t_cub3D *cub, int x, int y)
+{
+	while (++y < cub->draw.drawEnd)
+	{
+		cub->draw.texY = (int)cub->draw.texPos;
+		cub->draw.texPos += cub->draw.step;
+		if (cub->draw.side == 1)
+		{
+			if (cub->draw.stepY > 0)
+				cub->draw.color = my_mlx_pixel_get(&cub->textEA, cub->draw.texX, cub->draw.texY);
+			else if (cub->draw.stepY < 0)
+				cub->draw.color = my_mlx_pixel_get(&cub->textWE, cub->draw.texX, cub->draw.texY);
+		}
+		else
+		{
+			if (cub->draw.stepX > 0)
+				cub->draw.color = my_mlx_pixel_get(&cub->textNO, cub->draw.texX, cub->draw.texY);
+			else if (cub->draw.stepX < 0)
+				cub->draw.color = my_mlx_pixel_get(&cub->textSO, cub->draw.texX, cub->draw.texY);
+		}
+		my_mlx_pixel_put(&cub->canvas, x, y, cub->draw.color);
+	}
+}
+
+void	draw_skye_floor(t_cub3D *cub, int x)
+{
+	int y;
+
+	y = -1;
+	while (++y < cub->draw.drawStart)
+		my_mlx_pixel_put(&cub->canvas, x, y, 0x003b5eeb);
+	y = cub->draw.drawEnd - 1;
+	while (++y < cub->pars.sHeight - 1)
+		my_mlx_pixel_put(&cub->canvas, x, y, 0x00CF74D3);
 }
 
 // void	draw_square(const int x,const int y,int color, t_canvas *img)

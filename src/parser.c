@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/23 18:59:10 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/25 14:28:23 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	save_fc(t_cub3D *cub, char **mas, char flag)
 
 void	switch_(t_cub3D *cub, char **mas)
 {
-	if (mas[0] && !mas[3] && !S_HEIGHT && !ft_strncmp(mas[0], "R", 2))
+	if (mas[0] && !mas[3] && !cub->pars.sHeight && !ft_strncmp(mas[0], "R", 2))
 		valid_screen_size(cub, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.NO && !ft_strncmp(mas[0], "NO", 3))
 		valid_init_texture(&cub->textNO, cub->pars.NO, mas);

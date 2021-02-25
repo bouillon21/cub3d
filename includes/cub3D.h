@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/24 20:46:22 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/02/25 21:03:56 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,6 @@
 # include <math.h>
 # include "libft.h"
 # include "get_next_line.h"
-
-#define DIR_X cub->player.dirX
-#define DIR_Y cub->player.dirY
-#define POS_X cub->player.posX
-#define POS_Y cub->player.posY
-#define PLANE_X cub->player.planeX
-#define PLANE_Y cub->player.planeY
-#define S_HEIGHT cub->pars.sHeight
 
 typedef struct	s_canvas
 {
@@ -97,6 +89,20 @@ typedef struct	s_draw
 	int			lineHeight;
 	int			drawStart;
 	int			drawEnd;
+
+	double		spriteX;
+	double		spriteY;
+	double		invDet;
+	double		transformX;
+	double		transformY;
+	int			spriteScreenX;
+	int			spriteHeight;
+	int			drawStartY;
+	int			drawStartX;
+	int			drawEndY;
+	int			drawEndX;
+	int			spriteWidth;
+	int			stripe;
 }				t_draw;
 
 typedef struct	s_pars
@@ -168,5 +174,12 @@ void	draw_wall(t_cub3D *cub, int x, int y);
 void	init_ray(t_cub3D *cub, int x );
 void	texture(t_cub3D *cub);
 void	draw_skye_floor(t_cub3D *cub, int x);
+
+void	sp_post_dist(t_cub3D *cub, int i, int *sporder);
+void	sp_height_width(t_draw *draw, t_pars *pars);
+void	sp_draw(t_cub3D *cub, double *zbuf);
+void	sp_sort_dist(t_cub3D *cub, int *sp_order, double *sp_dis);
+void	sort_sprites(int *order, double *dist, int amount);
+void	sort_order(t_pair *orders, int amount);
 
 #endif
