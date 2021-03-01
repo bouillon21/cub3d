@@ -50,3 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+texture/.DS_Store
+texture/ahegao_xpm/.DS_Store
+texture/wolftex_xpm/.DS_Store
+cub3D
+.gitignore
+.DS_Store
+.vscode/settings.json
