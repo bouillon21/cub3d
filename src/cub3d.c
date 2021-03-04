@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/25 21:08:46 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:19:11 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,10 +101,10 @@ int draw_img(t_cub3D * cub)
 	return(1);
 }
 
-int main()
+int main(int argc, char **argv)
 {
 	t_cub3D cub;
-	cub.pars.fd = open("map_ahegao.txt", O_RDONLY);
+	cub.pars.fd = open(argv[1], O_RDONLY);
 	parser(&cub);
 	cub_init(&cub);
 #pragma region //init mlx

@@ -1,11 +1,11 @@
-R 1920 1000
+R 32233 342332323
 NO texture/skachat-krasivye-kartinki-na-telefon-besplatno-44-650x1155.xpm
 SO texture/1567106726159459734.xpm
 WE texture/ahegao_xpm/b7747c4222f9ed7ebb5997d80570aef1.xpm
 EA texture/ahegao_xpm/unnamed.xpm
 S texture/wolftex_xpm/SARGE1M.xpm
 F 220,100,0
-C 225,30,0
+C 255,30,0
 
 1111111111111111111111111
 1100000200110000000000001

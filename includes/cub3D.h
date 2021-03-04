@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/25 21:03:56 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:02:57 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,9 +160,9 @@ void	error_message(char *str);
 void	cub_init(t_cub3D *cub);
 void	init_texture(t_canvas *texture, char *way);
 void	valid_screen_size(t_cub3D *cub, char **mas);
-void	valid_init_texture(t_canvas *texture, char *way, char **mas);
+void	valid_init_texture(t_canvas *texture, char **way, char **mas);
 void	valid_map(t_cub3D *cub);
-void	valid_fc(t_cub3D *cub, char **mas, char param);
+void	valid_fc(int *pars, char **mas);
 void	save_fc(t_cub3D *cub, char **mas, char flag);
 
 

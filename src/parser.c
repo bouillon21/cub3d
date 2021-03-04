@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/25 14:28:23 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/04 15:18:04 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,26 +47,42 @@ void	save_fc(t_cub3D *cub, char **mas, char flag)
 	free_array(cub, &tmp);
 }
 
+void err(t_cub3D *cub)
+{
+	printf("R: %d\t%d\n", cub->pars.sWidth,cub->pars.sHeight);
+	printf("NO: %s\n", cub->pars.NO);
+	printf("SO: %s\n", cub->pars.SO);
+	printf("WE: %s\n", cub->pars.WE);
+	printf("EA: %s\n", cub->pars.EA);
+	printf("S: %s\n", cub->pars.S);
+	printf("F: %d\t%d\t%d\n", cub->pars.F[0], cub->pars.F[1], cub->pars.F[2]);
+	printf("C: %d\t%d\t%d\n", cub->pars.C[0], cub->pars.C[1], cub->pars.C[2]);
+	error_message("anvalid param");
+}
+
 void	switch_(t_cub3D *cub, char **mas)
 {
 	if (mas[0] && !mas[3] && !cub->pars.sHeight && !ft_strncmp(mas[0], "R", 2))
 		valid_screen_size(cub, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.NO && !ft_strncmp(mas[0], "NO", 3))
-		valid_init_texture(&cub->textNO, cub->pars.NO, mas);
+		valid_init_texture(&cub->textNO, &cub->pars.NO, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.SO && !ft_strncmp(mas[0], "SO", 3))
-		valid_init_texture(&cub->textSO, cub->pars.SO, mas);
+		valid_init_texture(&cub->textSO, &cub->pars.SO, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.WE && !ft_strncmp(mas[0], "WE", 3))
-		valid_init_texture(&cub->textWE, cub->pars.WE, mas);
+		valid_init_texture(&cub->textWE, &cub->pars.WE, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.EA && !ft_strncmp(mas[0], "EA", 3))
-		valid_init_texture(&cub->textEA, cub->pars.EA, mas);
+		valid_init_texture(&cub->textEA, &cub->pars.EA, mas);
 	else if (mas[0] && !mas[2] && !cub->pars.S && !ft_strncmp(mas[0], "S", 2))
-		valid_init_texture(&cub->textS, cub->pars.S, mas);
-	else if (mas[0] && !cub->pars.F[0] && !ft_strncmp(mas[0], "F", 2))
-		save_fc(cub, mas, 'F');
-	else if (mas[0] && !cub->pars.C[0] && !ft_strncmp(mas[0], "C", 2))
-		save_fc(cub, mas, 'C');
+		valid_init_texture(&cub->textS, &cub->pars.S, mas);
+	else if (mas[0] && !mas[2] && !cub->pars.F[0]
+		&& !ft_strncmp(mas[0], "F", 2))
+		valid_fc(cub->pars.F, mas);
+	else if (mas[0] && !mas[2] && !cub->pars.C[0]
+		&& !ft_strncmp(mas[0], "C", 2))
+		valid_fc(cub->pars.C, mas);
 	else if (mas[0])
-		error_message("anvalid param");
+		err(cub);
+		// error_message("anvalid param");
 }
 
 void	parser(t_cub3D *cub)
@@ -96,4 +112,14 @@ void	parser(t_cub3D *cub)
 		free(line);
 	}
 	map(cub, &head, ft_lstsize(head));
+	// ft_lstclear(&head, free);
+	// free(head);
+	printf("R: %d\t%d\n", cub->pars.sWidth,cub->pars.sHeight);
+	printf("NO: %s\n", cub->pars.NO);
+	printf("SO: %s\n", cub->pars.SO);
+	printf("WE: %s\n", cub->pars.WE);
+	printf("EA: %s\n", cub->pars.EA);
+	printf("S: %s\n", cub->pars.S);
+	printf("F: %d\t%d\t%d\n", cub->pars.F[0], cub->pars.F[1], cub->pars.F[2]);
+	printf("C: %d\t%d\t%d\n", cub->pars.C[0], cub->pars.C[1], cub->pars.C[2]);
 }
