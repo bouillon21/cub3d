@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/04 15:19:11 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/05 21:27:00 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,17 +104,22 @@ int draw_img(t_cub3D * cub)
 int main(int argc, char **argv)
 {
 	t_cub3D cub;
+	
 	cub.pars.fd = open(argv[1], O_RDONLY);
-	parser(&cub);
 	cub_init(&cub);
-#pragma region //init mlx
-	cub.canvas.mlx = mlx_init();
-	cub.canvas.mlx_win = mlx_new_window(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight, "Hi");
-	cub.canvas.img = mlx_new_image(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight);
-	cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
-#pragma endregion
-	mlx_hook(cub.canvas.mlx_win, 2, 1L << 0, &press_key, &cub);
-	mlx_hook(cub.canvas.mlx_win, 3, 1L << 1, &release_key, &cub);
-	mlx_loop_hook(cub.canvas.mlx, &draw_img, &cub);
-	mlx_loop(cub.canvas.mlx);
+	parser(&cub);
+	// while (1)
+	// {
+
+	// }
+// #pragma region //init mlx
+// 	cub.canvas.mlx = mlx_init();
+// 	cub.canvas.mlx_win = mlx_new_window(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight, "Hi");
+// 	cub.canvas.img = mlx_new_image(cub.canvas.mlx, cub.pars.sWidth, cub.pars.sHeight);
+// 	cub.canvas.addr = mlx_get_data_addr(cub.canvas.img, &cub.canvas.bits_per_pixel, &cub.canvas.line_length, &cub.canvas.endian);
+// #pragma endregion
+// 	mlx_hook(cub.canvas.mlx_win, 2, 1L << 0, &press_key, &cub);
+// 	mlx_hook(cub.canvas.mlx_win, 3, 1L << 1, &release_key, &cub);
+// 	mlx_loop_hook(cub.canvas.mlx, &draw_img, &cub);
+// 	mlx_loop(cub.canvas.mlx);
 	}

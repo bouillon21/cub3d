@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 19:39:30 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/04 15:02:44 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/05 22:03:17 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	adapt_screen_size(t_cub3D *cub)
 void	valid_screen_size(t_cub3D *cub, char **mas)
 {
 	int i;
-	int zat;
 
 	i = -1;
 	while (mas[1][++i])
@@ -71,8 +70,6 @@ void	valid_fc(int *pars, char **mas)
 {
 	int i;
 	int j;
-	int tmp;
-	char **tmp_mas;
 
 	i = 0;
 	j = 0;

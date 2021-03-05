@@ -6,100 +6,52 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/08 17:11:39 by cshelli           #+#    #+#             */
-/*   Updated: 2020/11/10 18:55:40 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/05 17:07:43 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		count_worlds(const char *s, char c)
+static int	size_str(char const *s, char c)
 {
-	size_t	i;
-	int		rez;
+	int	i;
+	int	pnt;
 
 	i = 0;
-	rez = 0;
-	while (s[i])
+	pnt = 0;
+	while (s[pnt] != '\0')
 	{
-		if ((s[i] == c && s[i + 1] != c && s[i + 1]) ||
-			(s[i] != c && !s[i + 1]))
-			rez++;
-		i++;
+		if ((s[pnt] == c && (s[pnt + 1] != c || s[pnt + 1] != '\0'))
+			|| (s[pnt] != c && s[pnt + 1] == '\0'))
+			i++;
+		pnt++;
 	}
-	return (rez);
+	return (i);
 }
 
-static char		**wipe(char **result, int g)
+char		**ft_split(char const *s, char c)
 {
-	while (g >= 0)
-	{
-		free(result[g]);
-		g--;
-	}
-	free(result);
-	return (0);
-}
+	int		i;
+	int		start;
+	int		strsum;
+	char	**pars;
 
-static void		print(char *dst, char const *start, char c)
-{
-	size_t i;
-
+	if (!s)
+		return (NULL);
+	pars = malloc(size_str(s, c) * sizeof(char *) + 1);
+	if (pars == NULL)
+		return (NULL);
 	i = 0;
-	while (start[i] != c && start[i] != '\0')
+	strsum = 0;
+	start = 0;
+	while (s[i] != '\0')
 	{
-		dst[i] = start[i];
+		if (s[i] == c && (s[i + 1] != c || s[i + 1] != '\0'))
+			start = i + 1;
+		else if (s[i] != c && (s[i + 1] == c || s[i + 1] == '\0'))
+			pars[strsum++] = ft_substr(s, start, i - start + 1);
 		i++;
 	}
-	dst[i] = '\0';
-}
-
-static char		**rezult(const char *s, int j, char **buf, char c)
-{
-	size_t g;
-	size_t i;
-
-	i = j + 1;
-	g = 0;
-	while (s[i] && ft_strlen(s) >= i)
-	{
-		if ((s[i] == c && s[i + 1] != c && s[i + 1]))
-		{
-			if (!(buf[g] = (char*)malloc(i - j + 1)))
-				return (wipe(buf, --g));
-			print(buf[g++], s + j, c);
-			j = i + 1;
-		}
-		i++;
-	}
-	if (ft_strlen(s) >= i)
-	{
-		buf[g] = (char *)malloc(i - j + 1);
-		print(buf[g++], s + j, c);
-	}
-	buf[g] = NULL;
-	return (buf);
-}
-
-char			**ft_split(char const *s, char c)
-{
-	char	**buf;
-	size_t	j;
-	size_t	i;
-
-	j = 0;
-	i = 0;
-	if (!s || !(buf = (char **)malloc(
-		(count_worlds(s, c) + 1) * sizeof(char *))))
-		return (0);
-	while (s[i++] == c)
-		j++;
-	if (i >= ft_strlen(s))
-	{
-		buf[0] = NULL;
-		return (buf);
-	}
-	buf = rezult(s, j, buf, c);
-	if (!buf)
-		return (0);
-	return (buf);
+	pars[strsum] = NULL;
+	return (pars);
 }

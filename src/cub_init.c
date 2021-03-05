@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 16:08:23 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/25 14:30:30 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/05 19:31:28 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	cub_init(t_cub3D *cub)
 	cub->player.pres_s = 0;
 	cub->player.pres_d = 0;
 
-	cub->player.posX = 2.5;
-	cub->player.posY = 1.5;
+	cub->player.posX = -1;
+	cub->player.posY = -1;
 	cub->player.speed = 0.1;
 	cub->player.moveSpeed = 0.11;
 	cub->player.rotSpeed = 0.1;

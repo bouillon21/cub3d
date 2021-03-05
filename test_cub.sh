@@ -4,6 +4,6 @@ do
 echo +++++++++++++++++++++
 echo $i
 echo +++++++++++++++++++++
-./cub3D
+./cub3D map_ahegao.txt
 
 done
