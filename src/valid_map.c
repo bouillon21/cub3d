@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:21:32 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/05 21:36:19 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/07 17:37:20 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	sum_sprites(t_cub3D *cub)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	while (cub->pars.map[++i])
@@ -27,7 +27,8 @@ void	sum_sprites(t_cub3D *cub)
 				cub->count_sprites++;
 		}
 	}
-	if (!(cub->sprites = malloc(sizeof(t_sprite *) * cub->count_sprites)))
+	cub->sprites = malloc(sizeof(t_sprite *) * cub->count_sprites);
+	if (!cub->sprites)
 		error_message("malloc");
 }
 
@@ -53,9 +54,33 @@ void	check_valid(char **map, int i, int j)
 		error_message("map");
 }
 
+void	dir_player(t_cub3D *cub, char dir)
+{
+	if (dir == 'N')
+	{
+		cub->player.dirX = -1;
+		cub->player.planeY = 0.66;
+	}
+	if (dir == 'S')
+	{
+		cub->player.dirX = 1;
+		cub->player.planeY = -0.66;
+	}
+	if (dir == 'W')
+	{
+		cub->player.dirY = -1;
+		cub->player.planeX = -0.66;
+	}
+	if (dir == 'E')
+	{
+		cub->player.dirY = 1;
+		cub->player.planeX = 0.66;
+	}
+}
+
 void	pos_player_sprite(t_cub3D *cub, char **map, int i, int j)
 {
-	static int count;
+	static int	count;
 
 	if (!count)
 		count = 0;
@@ -63,6 +88,7 @@ void	pos_player_sprite(t_cub3D *cub, char **map, int i, int j)
 	{
 		if (cub->player.posX != -1)
 			error_message("many players");
+		dir_player(cub, cub->pars.map[i][j]);
 		cub->pars.map[i][j] = '0';
 		cub->player.posX = i + 0.5;
 		cub->player.posY = j + 0.5;
@@ -77,13 +103,15 @@ void	pos_player_sprite(t_cub3D *cub, char **map, int i, int j)
 
 void	valid_map(t_cub3D *cub)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = -1;
 	sum_sprites(cub);
 	while (cub->pars.map[++i])
 	{
+		if (cub->pars.map[i][0] == '\0')
+			error_message("map");
 		j = -1;
 		while (cub->pars.map[i][++j])
 		{

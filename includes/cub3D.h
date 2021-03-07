@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/04 15:02:57 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/07 19:39:08 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct	s_player
 	/*скорости движения и поворота*/
 	float		speed;
 	double		moveSpeed;
-	double		rotSpeed;
+	double		rot_speed;
 	int			rot;
 }				t_player;
 
@@ -154,17 +154,18 @@ int		release_key(int keycode, t_cub3D *cub);
 int		press_key(int keycode, t_cub3D *cub);
 
 int		check_one(char *line);
+int		check_mas(char **mas);
 void	free_array(t_cub3D *cub, char ***mas);
 void	error_message(char *str);
+int		quit(int keycode, t_cub3D *cub);
 
 void	cub_init(t_cub3D *cub);
 void	init_texture(t_canvas *texture, char *way);
-void	valid_screen_size(t_cub3D *cub, char **mas);
-void	valid_init_texture(t_canvas *texture, char **way, char **mas);
+void	valid_screen_size(t_cub3D *cub, char **mas, int *sum);
+void	valid_init_texture(t_canvas *texture, char **way, char **mas, int *sum);
 void	valid_map(t_cub3D *cub);
-void	valid_fc(int *pars, char **mas);
+void	valid_fc(int *pars, char **mas, int *sum);
 void	save_fc(t_cub3D *cub, char **mas, char flag);
-
 
 void	step_side(t_draw *draw, t_player *player);
 void	dda(t_draw *draw, char **map);

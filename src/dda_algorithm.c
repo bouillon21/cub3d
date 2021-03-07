@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 19:21:27 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/25 14:25:22 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/07 19:03:37 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,26 +88,26 @@ void	tex_size(t_draw *draw, int width, int height)
 		draw->texX = width - draw->texX - 1;
 	if (draw->side == 1 && draw->rayDirY < 0)
 		draw->texX = width - draw->texX - 1;
-	// How much to increase the texture coordinate per screen pixel
+	//How much to increase the texture coordinate per screen pixel
 	draw->step = 1.0 * height / draw->lineHeight;
 }
 
 void	texture(t_cub3D *cub)
 {
 	if (cub->draw.side == 1)
-		{
-			if (cub->draw.stepY > 0)
-				tex_size(&cub->draw, cub->textEA.width, cub->textEA.height);
-			else if (cub->draw.stepY < 0)
-				tex_size(&cub->draw, cub->textWE.width, cub->textWE.height);
-		}
-		else
-		{
-			if (cub->draw.stepX > 0)
-				tex_size(&cub->draw, cub->textNO.width, cub->textNO.height);
-			else if (cub->draw.stepX < 0)
-				tex_size(&cub->draw, cub->textSO.width, cub->textSO.height);
-		}
+	{
+		if (cub->draw.stepY > 0)
+			tex_size(&cub->draw, cub->textEA.width, cub->textEA.height);
+		else if (cub->draw.stepY < 0)
+			tex_size(&cub->draw, cub->textWE.width, cub->textWE.height);
+	}
+	else
+	{
+		if (cub->draw.stepX > 0)
+			tex_size(&cub->draw, cub->textNO.width, cub->textNO.height);
+		else if (cub->draw.stepX < 0)
+			tex_size(&cub->draw, cub->textSO.width, cub->textSO.height);
+	}
 	// Starting texture coordinate
 	cub->draw.texPos = (cub->draw.drawStart - cub->pars.sHeight / 2 +
 	cub->draw.lineHeight / 2) * cub->draw.step;

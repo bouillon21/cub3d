@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 19:39:30 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/05 22:03:17 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/07 13:54:29 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	adapt_screen_size(t_cub3D *cub)
 		cub->pars.sHeight = h;
 }
 
-void	valid_screen_size(t_cub3D *cub, char **mas)
+void	valid_screen_size(t_cub3D *cub, char **mas, int *sum)
 {
 	int i;
 
@@ -49,6 +49,7 @@ void	valid_screen_size(t_cub3D *cub, char **mas)
 	adapt_screen_size(cub);
 	if (cub->pars.sWidth == 0 || cub->pars.sHeight == 0)
 		error_message("scren size anvalid!");
+	(*sum)++;
 }
 
 int		atoi_cub(char *mas, int *i, int *pars)
@@ -66,7 +67,7 @@ int		atoi_cub(char *mas, int *i, int *pars)
 	return (1);
 }
 
-void	valid_fc(int *pars, char **mas)
+void	valid_fc(int *pars, char **mas, int *sum)
 {
 	int i;
 	int j;
@@ -83,13 +84,17 @@ void	valid_fc(int *pars, char **mas)
 		i++;
 		j++;
 	}
+	if (mas[1][i - 1] == ',')
+		error_message("color");
+	(*sum)++;
 }
 
-void	valid_init_texture(t_canvas *texture, char **way, char **mas)
+void	valid_init_texture(t_canvas *texture, char **way, char **mas, int *sum)
 {
 	*way = ft_strdup(mas[1]);
 	texture->mlx = mlx_init();
 	if (!(texture->img = mlx_xpm_file_to_image(&texture->mlx, *way, &texture->width, &texture->height)))
 		error_message("texture");
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
+	(*sum)++;
 }
