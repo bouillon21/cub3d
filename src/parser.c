@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 19:43:59 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	map(t_cub3D *cub, t_list **head, int size)
 {

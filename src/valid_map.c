@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:21:32 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 17:37:20 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	sum_sprites(t_cub3D *cub)
 {

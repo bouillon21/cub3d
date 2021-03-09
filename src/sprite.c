@@ -6,41 +6,45 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 18:28:55 by cshelli           #+#    #+#             */
-/*   Updated: 2021/02/25 21:17:00 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
+
+/*
+**	spriteXY	переводим положение спрайта относительно камеры
+**	invDet		требуется для правильного умножения матриц
+**	transformXY	расстояние от спрайта до игрока
+*/
 
 void	sp_post_dist(t_cub3D *cub, int i, int *sporder)
 {
-	//translate sprite position to relative to camera
 	cub->draw.spriteX = cub->sprites[sporder[i]].x - cub->player.posX;
 	cub->draw.spriteY = cub->sprites[sporder[i]].y - cub->player.posY;
-	//required for correct matrix multiplication
-	cub->draw.invDet = 1.0 / (cub->player.planeX * cub->player.dirY -
-								cub->player.dirX * cub->player.planeY);
-	cub->draw.transformX = cub->draw.invDet * (cub->player.dirY *
-	cub->draw.spriteX - cub->player.dirX * cub->draw.spriteY);
-	cub->draw.transformY = cub->draw.invDet * (-cub->player.planeY *
-	cub->draw.spriteX + cub->player.planeX * cub->draw.spriteY); //this is actually the depth inside the screen, that what Z is in 3D, the distance of sprite to player, matching sqrt(spriteDistance[i])
-	cub->draw.spriteScreenX = (int)((cub->pars.sWidth / 2) *
-			(1 + cub->draw.transformX / cub->draw.transformY));
-	//parameters for scaling and moving the sprites
+	cub->draw.invDet = 1.0 / (cub->player.planeX * cub->player.dirY
+		- cub->player.dirX * cub->player.planeY);
+	cub->draw.transformX = cub->draw.invDet * (cub->player.dirY
+		* cub->draw.spriteX - cub->player.dirX * cub->draw.spriteY);
+	cub->draw.transformY = cub->draw.invDet * (-cub->player.planeY
+		* cub->draw.spriteX + cub->player.planeX * cub->draw.spriteY);
+	cub->draw.spriteScreenX = (int)((cub->pars.sWidth / 2)
+		* (1 + cub->draw.transformX / cub->draw.transformY));
 }
+
+/*
+** используем transformY для предотврощения рыбьего глаза
+*/
 
 void	sp_height_width(t_draw *draw, t_pars *pars)
 {
-	//calculate height of the sprite on screen
-	draw->spriteHeight = abs((int)(pars->sHeight / (draw->transformY))); //using 'cub->draw.transformY' instead of the real distance prevents fisheye
-	//calculate lowest and highest pixel to fill in current x
+	draw->spriteHeight = abs((int)(pars->sHeight / (draw->transformY)));
 	draw->drawStartY = -draw->spriteHeight / 2 + pars->sHeight / 2;
 	if (draw->drawStartY < 0)
 		draw->drawStartY = 0;
 	draw->drawEndY = draw->spriteHeight / 2 + pars->sHeight / 2;
 	if (draw->drawEndY >= pars->sHeight)
 		draw->drawEndY = pars->sHeight - 1;
-	//calculate width of the sprite
 	draw->spriteWidth = abs((int)(pars->sHeight / (draw->transformY)));
 	draw->drawStartX = -draw->spriteWidth / 2 + draw->spriteScreenX;
 	if (draw->drawStartX < 0)

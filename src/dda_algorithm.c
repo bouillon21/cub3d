@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 19:21:27 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 19:03:37 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	step_side(t_draw *draw, t_player *player)
 {
@@ -88,7 +88,6 @@ void	tex_size(t_draw *draw, int width, int height)
 		draw->texX = width - draw->texX - 1;
 	if (draw->side == 1 && draw->rayDirY < 0)
 		draw->texX = width - draw->texX - 1;
-	//How much to increase the texture coordinate per screen pixel
 	draw->step = 1.0 * height / draw->lineHeight;
 }
 
@@ -108,7 +107,6 @@ void	texture(t_cub3D *cub)
 		else if (cub->draw.stepX < 0)
 			tex_size(&cub->draw, cub->textSO.width, cub->textSO.height);
 	}
-	// Starting texture coordinate
 	cub->draw.texPos = (cub->draw.drawStart - cub->pars.sHeight / 2 +
 	cub->draw.lineHeight / 2) * cub->draw.step;
 }

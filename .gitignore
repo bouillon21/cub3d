@@ -58,3 +58,5 @@ cub3d_destroyer-master
 .gitignore
 .DS_Store
 .vscode/settings.json
+src/cub3d.c
+screen.bmp

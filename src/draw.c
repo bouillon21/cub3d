@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/25 18:20:09 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 17:48:08 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color)
 {

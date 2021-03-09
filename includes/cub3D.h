@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 19:39:08 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:49 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,11 +135,11 @@ typedef struct	cub3D
 	int			count_sprites;
 }				t_cub3D;
 
-typedef struct		s_pair
+typedef struct	s_pair
 {
-	double	first;
-	int		second;
-}					t_pair;
+	double		first;
+	int			second;
+}				t_pair;
 
 void	parser(t_cub3D *cub);
 void	draw_square(const int x,const int y,int color, t_canvas *img);
@@ -176,11 +176,16 @@ void	init_ray(t_cub3D *cub, int x );
 void	texture(t_cub3D *cub);
 void	draw_skye_floor(t_cub3D *cub, int x);
 
+void	sort_order(t_pair *orders, int amount);
+void	sort_sprites(int *order, double *dist, int amount);
 void	sp_post_dist(t_cub3D *cub, int i, int *sporder);
 void	sp_height_width(t_draw *draw, t_pars *pars);
 void	sp_draw(t_cub3D *cub, double *zbuf);
 void	sp_sort_dist(t_cub3D *cub, int *sp_order, double *sp_dis);
 void	sort_sprites(int *order, double *dist, int amount);
 void	sort_order(t_pair *orders, int amount);
+
+
+void		screenshot(t_cub3D *all);
 
 #endif

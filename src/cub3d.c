@@ -6,60 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 19:01:41 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 12:01:39 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-
-void	sort_order(t_pair *orders, int amount)
-{
-	int		i;
-	int		j;
-	t_pair	tmp;
-
-	i = -1;
-	while (++i < amount)
-	{
-		j = -1;
-		while (++j < amount - 1)
-		{
-			if (orders[j].first > orders[j + 1].first)
-			{
-				tmp.first = orders[j].first;
-				tmp.second = orders[j].second;
-				orders[j].first = orders[j + 1].first;
-				orders[j].second = orders[j + 1].second;
-				orders[j + 1].first = tmp.first;
-				orders[j + 1].second = tmp.second;
-			}
-		}
-	}
-}
-
-void	sort_sprites(int *order, double *dist, int amount)
-{
-	int		i;
-	t_pair	*sprites;
-
-	i = -1;
-	sprites = (t_pair*)malloc(sizeof(t_pair) * amount);
-	if (!sprites)
-		error_message("malloc");
-	while (++i < amount)
-	{
-		sprites[i].first = dist[i];
-		sprites[i].second = order[i];
-	}
-	sort_order(sprites, amount);
-	i = -1;
-	while (++i < amount)
-	{
-		dist[i] = sprites[amount - i - 1].first;
-		order[i] = sprites[amount - i - 1].second;
-	}
-	free(sprites);
-}
+#include "cub3d.h"
 
 void	render(t_cub3D *cub)
 {
@@ -104,10 +55,24 @@ int		draw_img(t_cub3D *cub)
 	return (1);
 }
 
+void	valid_arg(int argc, char **argv)
+{
+	int	i;
+
+	i = ft_strlen(argv[1]);
+	if (argc < 2 || argc > 3)
+		error_message("number of arguments");
+	if (i < 4 || ft_strncmp(&argv[1][i - 4], ".cub", 4))
+		error_message("config file");
+	if (argc == 3 && ft_strncmp(argv[2], "--save", 7))
+		error_message("screen");
+}
+
 int		main(int argc, char **argv)
 {
 	t_cub3D	cub;
 
+	valid_arg(argc, argv);
 	cub.pars.fd = open(argv[1], O_RDONLY);
 	cub_init(&cub);
 	parser(&cub);

@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 19:57:52 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 18:53:08 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 int		check_one(char *line)
 {
@@ -53,8 +53,8 @@ int		check_mas(char **mas)
 
 int		quit(int keycode, t_cub3D *cub)
 {
-	(void) keycode;
-	(void) cub;
+	(void)keycode;
+	(void)cub;
 	exit(0);
 	return (1);
 }

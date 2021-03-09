@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 19:39:30 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 13:54:29 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	adapt_screen_size(t_cub3D *cub)
 {
@@ -93,8 +93,10 @@ void	valid_init_texture(t_canvas *texture, char **way, char **mas, int *sum)
 {
 	*way = ft_strdup(mas[1]);
 	texture->mlx = mlx_init();
-	if (!(texture->img = mlx_xpm_file_to_image(&texture->mlx, *way, &texture->width, &texture->height)))
+	if (!(texture->img = mlx_xpm_file_to_image(&texture->mlx, *way,
+		&texture->width, &texture->height)))
 		error_message("texture");
-	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel, &texture->line_length, &texture->endian);
+	texture->addr = mlx_get_data_addr(texture->img, &texture->bits_per_pixel,
+		&texture->line_length, &texture->endian);
 	(*sum)++;
 }

@@ -6,11 +6,11 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 16:08:23 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/07 20:49:19 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "cub3d.h"
 
 void	init_texture(t_canvas *texture, char *way)
 {
@@ -36,20 +36,23 @@ void	cub_init(t_cub3D *cub)
 	cub->player.rot = 0;
 }
 
+/*
+**	init_ray	вычисляем положение и направление луча
+**	camX		x-координата в пространстве камеры
+**	deltaDist	длина луча
+**	hit			столкновение со стеной
+*/
+
 void	init_ray(t_cub3D *cub, int x)
 {
-	// calculate ray position and direction
-	//x-coordinatein camera space
 	cub->draw.camX = 2 * x / (double)cub->pars.sWidth - 1;
 	cub->draw.rayDirX = cub->player.dirX + cub->player.planeX *
 	cub->draw.camX;
 	cub->draw.rayDirY = cub->player.dirY + cub->player.planeY *
 	cub->draw.camX;
-	//which box of the map we're in
 	cub->draw.mapX = (int)cub->player.posX;
 	cub->draw.mapY = (int)cub->player.posY;
-	//length of ray from one x or y-cub->draw.side to next x or y-cub->drawside
 	cub->draw.deltaDistX = fabs(1 / cub->draw.rayDirX);
 	cub->draw.deltaDistY = fabs(1 / cub->draw.rayDirY);
-	cub->draw.hit = 0; //was there a wall cub->draw.hit?
+	cub->draw.hit = 0;
 }
