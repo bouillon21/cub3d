@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:49 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:33:08 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,16 @@ typedef struct	s_sprite
 
 typedef struct	s_player
 {
-	/*координаты игрока*/
 	float		posX;
 	float		posY;
-	/*направление игрока*/
 	float		dirX;
 	float		dirY;
-	/*плоскость игрока игрока*/
 	float		planeX;
 	float		planeY;
-	/*перемещение игрока*/
 	int			pres_w;
 	int			pres_a;
 	int			pres_s;
 	int			pres_d;
-	/*скорости движения и поворота*/
 	float		speed;
 	double		moveSpeed;
 	double		rot_speed;
@@ -120,7 +115,7 @@ typedef struct	s_pars
 	char		*S;
 }				t_pars;
 
-typedef struct	cub3D
+typedef struct	s_cub3D
 {
 	t_pars		pars;
 	t_draw		draw;
@@ -133,6 +128,7 @@ typedef struct	cub3D
 	t_canvas	textS;
 	t_sprite	*sprites;
 	int			count_sprites;
+	int			screen;
 }				t_cub3D;
 
 typedef struct	s_pair
@@ -141,51 +137,52 @@ typedef struct	s_pair
 	int			second;
 }				t_pair;
 
-void	parser(t_cub3D *cub);
-void	draw_square(const int x,const int y,int color, t_canvas *img);
-void	draw_map(t_cub3D *cub ,int color);
-void	my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
-int		my_mlx_pixel_get(t_canvas *texture, int x, int y);
-void	draw_player(t_cub3D *cub, int color);
+void			parser(t_cub3D *cub);
+void			draw_square(const int x, const int y, int color, t_canvas *img);
+void			draw_map(t_cub3D *cub, int color);
+void			my_mlx_pixel_put(t_canvas *data, int x, int y, int color);
+int				my_mlx_pixel_get(t_canvas *texture, int x, int y);
+void			draw_player(t_cub3D *cub, int color);
 
-void	rotation_player(t_cub3D *cub);
-void	move_player(t_cub3D *cub);
-int		release_key(int keycode, t_cub3D *cub);
-int		press_key(int keycode, t_cub3D *cub);
+void			rotation_player(t_cub3D *cub);
+void			move_player(t_cub3D *cub);
+int				release_key(int keycode, t_cub3D *cub);
+int				press_key(int keycode, t_cub3D *cub);
 
-int		check_one(char *line);
-int		check_mas(char **mas);
-void	free_array(t_cub3D *cub, char ***mas);
-void	error_message(char *str);
-int		quit(int keycode, t_cub3D *cub);
+int				check_one(char *line);
+int				check_mas(char **mas);
+void			free_array(t_cub3D *cub, char ***mas);
+void			error_message(char *str);
+int				quit(int keycode, t_cub3D *cub);
 
-void	cub_init(t_cub3D *cub);
-void	init_texture(t_canvas *texture, char *way);
-void	valid_screen_size(t_cub3D *cub, char **mas, int *sum);
-void	valid_init_texture(t_canvas *texture, char **way, char **mas, int *sum);
-void	valid_map(t_cub3D *cub);
-void	valid_fc(int *pars, char **mas, int *sum);
-void	save_fc(t_cub3D *cub, char **mas, char flag);
+void			cub_init(t_cub3D *cub);
+void			init_texture(t_canvas *texture, char *way);
+void			valid_screen_size(t_cub3D *cub, char **mas, int *sum);
+void			valid_init_texture(t_canvas *texture, char **way,
+					char **mas, int *sum);
+void			valid_map(t_cub3D *cub);
+void			valid_fc(int *pars, char **mas, int *sum);
+void			save_fc(t_cub3D *cub, char **mas, char flag);
 
-void	step_side(t_draw *draw, t_player *player);
-void	dda(t_draw *draw, char **map);
-void	fish_eye__height_wall(t_draw *draw, t_player *player, int sheight);
-void	tex_size(t_draw *draw, int width, int height);
-void	draw_wall(t_cub3D *cub, int x, int y);
-void	init_ray(t_cub3D *cub, int x );
-void	texture(t_cub3D *cub);
-void	draw_skye_floor(t_cub3D *cub, int x);
+void			step_side(t_draw *draw, t_player *player);
+void			dda(t_draw *draw, char **map);
+void			fish_eye__height_wall(t_draw *draw, t_player *player,
+					int sheight);
+void			tex_size(t_draw *draw, int width, int height);
+void			draw_wall(t_cub3D *cub, int x, int y);
+void			init_ray(t_cub3D *cub, int x);
+void			texture(t_cub3D *cub);
+void			draw_skye_floor(t_cub3D *cub, int x);
 
-void	sort_order(t_pair *orders, int amount);
-void	sort_sprites(int *order, double *dist, int amount);
-void	sp_post_dist(t_cub3D *cub, int i, int *sporder);
-void	sp_height_width(t_draw *draw, t_pars *pars);
-void	sp_draw(t_cub3D *cub, double *zbuf);
-void	sp_sort_dist(t_cub3D *cub, int *sp_order, double *sp_dis);
-void	sort_sprites(int *order, double *dist, int amount);
-void	sort_order(t_pair *orders, int amount);
+void			sort_order(t_pair *orders, int amount);
+void			sort_sprites(int *order, double *dist, int amount);
+void			sp_post_dist(t_cub3D *cub, int i, int *sporder);
+void			sp_height_width(t_draw *draw, t_pars *pars);
+void			sp_draw(t_cub3D *cub, double *zbuf);
+void			sp_sort_dist(t_cub3D *cub, int *sp_order, double *sp_dis);
+void			sort_sprites(int *order, double *dist, int amount);
+void			sort_order(t_pair *orders, int amount);
 
-
-void		screenshot(t_cub3D *all);
+void			screenshot(t_cub3D *all);
 
 #endif

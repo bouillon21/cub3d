@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/09 11:18:18 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:53:55 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:04:37 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	create_screen(t_cub3D *all, int fd)
 	write(fd, &pos_pixel_data, 4);
 	pos_pixel_data = 40;
 	write(fd, &pos_pixel_data, 4);
-	write(fd, &all->pars.sHeight, 4);
 	write(fd, &all->pars.sWidth, 4);
+	write(fd, &all->pars.sHeight, 4);
 	write(fd, &plane, 2);
 	plane = 32;
 	write(fd, &plane, 2);
@@ -42,11 +42,11 @@ static void	filling_file_screen(t_cub3D *all, int fd)
 	int	j;
 	int	color;
 
-	i = all->pars.sWidth;
+	i = all->pars.sHeight;
 	while (--i >= 0)
 	{
 		j = -1;
-		while (++j < all->pars.sHeight)
+		while (++j < all->pars.sWidth)
 		{
 			color = *(int*)(all->canvas.addr + (i * all->canvas.line_length
 					+ j * (all->canvas.bits_per_pixel / 8)));
@@ -77,4 +77,5 @@ void		screenshot(t_cub3D *all)
 	write(fd, &zero, 4);
 	filling_file_screen(all, fd);
 	close(fd);
+	exit(0);
 }
