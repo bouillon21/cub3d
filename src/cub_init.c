@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 16:08:23 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:48:50 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,37 +22,37 @@ void	init_texture(t_canvas *texture, char *way)
 	&texture->line_length, &texture->endian);
 }
 
-void	cub_init(t_cub3D *cub)
+void	cub_init(t_cub3d *cub)
 {
 	cub->player.pres_w = 0;
 	cub->player.pres_a = 0;
 	cub->player.pres_s = 0;
 	cub->player.pres_d = 0;
-	cub->player.posX = -1;
-	cub->player.posY = -1;
+	cub->player.pos_x = -1;
+	cub->player.pos_y = -1;
 	cub->player.speed = 0.1;
-	cub->player.moveSpeed = 0.17;
+	cub->player.move_speed = 0.17;
 	cub->player.rot_speed = 0.1;
 	cub->player.rot = 0;
 }
 
 /*
 **	init_ray	вычисляем положение и направление луча
-**	camX		x-координата в пространстве камеры
+**	cam_x		x-координата в пространстве камеры
 **	deltaDist	длина луча
 **	hit			столкновение со стеной
 */
 
-void	init_ray(t_cub3D *cub, int x)
+void	init_ray(t_cub3d *cub, int x)
 {
-	cub->draw.camX = 2 * x / (double)cub->pars.sWidth - 1;
-	cub->draw.rayDirX = cub->player.dirX + cub->player.planeX *
-	cub->draw.camX;
-	cub->draw.rayDirY = cub->player.dirY + cub->player.planeY *
-	cub->draw.camX;
-	cub->draw.mapX = (int)cub->player.posX;
-	cub->draw.mapY = (int)cub->player.posY;
-	cub->draw.deltaDistX = fabs(1 / cub->draw.rayDirX);
-	cub->draw.deltaDistY = fabs(1 / cub->draw.rayDirY);
+	cub->draw.cam_x = 2 * x / (double)cub->pars.s_width - 1;
+	cub->draw.ray_dir_x = cub->player.dir_x + cub->player.plane_x *
+	cub->draw.cam_x;
+	cub->draw.ray_dir_y = cub->player.dir_y + cub->player.plane_y *
+	cub->draw.cam_x;
+	cub->draw.map_x = (int)cub->player.pos_x;
+	cub->draw.map_y = (int)cub->player.pos_y;
+	cub->draw.delta_dist_x = fabs(1 / cub->draw.ray_dir_x);
+	cub->draw.delta_dist_y = fabs(1 / cub->draw.ray_dir_y);
 	cub->draw.hit = 0;
 }

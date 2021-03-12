@@ -6,13 +6,13 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:21:32 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:38:42 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	sum_sprites(t_cub3D *cub)
+void	sum_sprites(t_cub3d *cub)
 {
 	int	i;
 	int	j;
@@ -54,31 +54,31 @@ void	check_valid(char **map, int i, int j)
 		error_message("map");
 }
 
-void	dir_player(t_cub3D *cub, char dir)
+void	dir_player(t_cub3d *cub, char dir)
 {
 	if (dir == 'N')
 	{
-		cub->player.dirX = -1;
-		cub->player.planeY = 0.66;
+		cub->player.dir_x = -1;
+		cub->player.plane_y = 0.66;
 	}
 	if (dir == 'S')
 	{
-		cub->player.dirX = 1;
-		cub->player.planeY = -0.66;
+		cub->player.dir_x = 1;
+		cub->player.plane_y = -0.66;
 	}
 	if (dir == 'W')
 	{
-		cub->player.dirY = -1;
-		cub->player.planeX = -0.66;
+		cub->player.dir_y = -1;
+		cub->player.plane_x = -0.66;
 	}
 	if (dir == 'E')
 	{
-		cub->player.dirY = 1;
-		cub->player.planeX = 0.66;
+		cub->player.dir_y = 1;
+		cub->player.plane_x = 0.66;
 	}
 }
 
-void	pos_player_sprite(t_cub3D *cub, char **map, int i, int j)
+void	pos_player_sprite(t_cub3d *cub, char **map, int i, int j)
 {
 	static int	count;
 
@@ -86,12 +86,12 @@ void	pos_player_sprite(t_cub3D *cub, char **map, int i, int j)
 		count = 0;
 	if (ft_strchr("NEWS", cub->pars.map[i][j]))
 	{
-		if (cub->player.posX != -1)
+		if (cub->player.pos_x != -1)
 			error_message("many players");
 		dir_player(cub, cub->pars.map[i][j]);
 		cub->pars.map[i][j] = '0';
-		cub->player.posX = i + 0.5;
-		cub->player.posY = j + 0.5;
+		cub->player.pos_x = i + 0.5;
+		cub->player.pos_y = j + 0.5;
 	}
 	if (cub->pars.map[i][j] == '2')
 	{
@@ -101,7 +101,7 @@ void	pos_player_sprite(t_cub3D *cub, char **map, int i, int j)
 	}
 }
 
-void	valid_map(t_cub3D *cub)
+void	valid_map(t_cub3d *cub)
 {
 	int	i;
 	int	j;
@@ -122,6 +122,6 @@ void	valid_map(t_cub3D *cub)
 				error_message("map");
 		}
 	}
-	if (cub->player.posX == -1)
+	if (cub->player.pos_x == -1)
 		error_message("no player");
 }

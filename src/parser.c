@@ -6,13 +6,13 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:55:31 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	map(t_cub3D *cub, t_list **head, int size)
+void	map(t_cub3d *cub, t_list **head, int size)
 {
 	t_list	*tmp;
 	char	*line;
@@ -33,25 +33,25 @@ void	map(t_cub3D *cub, t_list **head, int size)
 	ft_lstclear(head, free);
 }
 
-void	switch_param(t_cub3D *cub, char **mas, int *sum)
+void	switch_param(t_cub3d *cub, char **mas, int *sum)
 {
 	if (mas[0] && mas[1] && mas[2] && !mas[3] && !ft_strncmp(mas[0], "R", 2)
-		&& !cub->pars.sHeight)
+		&& !cub->pars.s_height)
 		valid_screen_size(cub, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "NO", 3) && !cub->pars.NO)
-		valid_init_texture(&cub->textNO, &cub->pars.NO, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "SO", 3) && !cub->pars.SO)
-		valid_init_texture(&cub->textSO, &cub->pars.SO, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "WE", 3) && !cub->pars.WE)
-		valid_init_texture(&cub->textWE, &cub->pars.WE, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "EA", 3) && !cub->pars.EA)
-		valid_init_texture(&cub->textEA, &cub->pars.EA, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "S", 2) && !cub->pars.S)
-		valid_init_texture(&cub->textS, &cub->pars.S, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "F", 2) && !cub->pars.F[0])
-		valid_fc(cub->pars.F, mas, sum);
-	else if (check_mas(mas) && !ft_strncmp(mas[0], "C", 2) && !cub->pars.C[0])
-		valid_fc(cub->pars.C, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "NO", 3) && !cub->pars.no)
+		valid_init_texture(&cub->text_no, &cub->pars.no, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "SO", 3) && !cub->pars.so)
+		valid_init_texture(&cub->text_so, &cub->pars.so, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "WE", 3) && !cub->pars.we)
+		valid_init_texture(&cub->text_we, &cub->pars.we, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "EA", 3) && !cub->pars.ea)
+		valid_init_texture(&cub->text_ea, &cub->pars.ea, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "S", 2) && !cub->pars.s)
+		valid_init_texture(&cub->text_s, &cub->pars.s, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "F", 2) && !cub->pars.f[0])
+		valid_fc(cub->pars.f, mas, sum);
+	else if (check_mas(mas) && !ft_strncmp(mas[0], "C", 2) && !cub->pars.c[0])
+		valid_fc(cub->pars.c, mas, sum);
 	else if (mas[0])
 		error_message("anvalid param");
 }
@@ -64,7 +64,7 @@ void	parser_map(t_list **head, char *line, int fd)
 	ft_lstadd_back(head, ft_lstnew(line));
 }
 
-void	parser(t_cub3D *cub)
+void	parser(t_cub3d *cub)
 {
 	char		*line;
 	char		**mas;

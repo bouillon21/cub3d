@@ -6,25 +6,25 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 19:39:30 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:49:12 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	adapt_screen_size(t_cub3D *cub)
+void	adapt_screen_size(t_cub3d *cub)
 {
 	int w;
 	int h;
 
 	mlx_get_screen_size(&w, &h);
-	if (cub->pars.sWidth > w)
-		cub->pars.sWidth = w;
-	if (cub->pars.sHeight > h)
-		cub->pars.sHeight = h;
+	if (cub->pars.s_width > w)
+		cub->pars.s_width = w;
+	if (cub->pars.s_height > h)
+		cub->pars.s_height = h;
 }
 
-void	valid_screen_size(t_cub3D *cub, char **mas, int *sum)
+void	valid_screen_size(t_cub3d *cub, char **mas, int *sum)
 {
 	int i;
 
@@ -33,21 +33,21 @@ void	valid_screen_size(t_cub3D *cub, char **mas, int *sum)
 	{
 		if (!ft_isdigit(mas[1][i]))
 			error_message("scren size anvalid!");
-		cub->pars.sWidth = cub->pars.sWidth * 10 + (mas[1][i] - 48);
-		if (cub->pars.sWidth > 999999)
-			cub->pars.sWidth = 999999;
+		cub->pars.s_width = cub->pars.s_width * 10 + (mas[1][i] - 48);
+		if (cub->pars.s_width > 999999)
+			cub->pars.s_width = 999999;
 	}
 	i = -1;
 	while (mas[2][++i])
 	{
 		if (!ft_isdigit(mas[2][i]))
 			error_message("scren size anvalid!");
-		cub->pars.sHeight = cub->pars.sHeight * 10 + (mas[2][i] - 48);
-		if (cub->pars.sHeight > 999999)
-			cub->pars.sHeight = 999999;
+		cub->pars.s_height = cub->pars.s_height * 10 + (mas[2][i] - 48);
+		if (cub->pars.s_height > 999999)
+			cub->pars.s_height = 999999;
 	}
 	adapt_screen_size(cub);
-	if (cub->pars.sWidth == 0 || cub->pars.sHeight == 0)
+	if (cub->pars.s_width == 0 || cub->pars.s_height == 0)
 		error_message("scren size anvalid!");
 	(*sum)++;
 }

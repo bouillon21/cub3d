@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/23 19:21:27 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:57:08 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,27 @@
 
 void	step_side(t_draw *draw, t_player *player)
 {
-	if (draw->rayDirX < 0)
+	if (draw->ray_dir_x < 0)
 	{
-		draw->stepX = -1;
-		draw->sideDistX = (player->posX - draw->mapX) * draw->deltaDistX;
+		draw->step_x = -1;
+		draw->side_dist_x = (player->pos_x - draw->map_x) * draw->delta_dist_x;
 	}
 	else
 	{
-		draw->stepX = 1;
-		draw->sideDistX = (draw->mapX + 1.0 - player->posX) * draw->deltaDistX;
+		draw->step_x = 1;
+		draw->side_dist_x = (draw->map_x + 1.0 - player->pos_x)
+			* draw->delta_dist_x;
 	}
-	if (draw->rayDirY < 0)
+	if (draw->ray_dir_y < 0)
 	{
-		draw->stepY = -1;
-		draw->sideDistY = (player->posY - draw->mapY) * draw->deltaDistY;
+		draw->step_y = -1;
+		draw->side_dist_y = (player->pos_y - draw->map_y) * draw->delta_dist_y;
 	}
 	else
 	{
-		draw->stepY = 1;
-		draw->sideDistY = (draw->mapY + 1.0 - player->posY) * draw->deltaDistY;
+		draw->step_y = 1;
+		draw->side_dist_y = (draw->map_y + 1.0 - player->pos_y)
+			* draw->delta_dist_y;
 	}
 }
 
@@ -40,19 +42,19 @@ void	dda(t_draw *draw, char **map)
 {
 	while (draw->hit == 0)
 	{
-		if (draw->sideDistX < draw->sideDistY)
+		if (draw->side_dist_x < draw->side_dist_y)
 		{
-			draw->sideDistX += draw->deltaDistX;
-			draw->mapX += draw->stepX;
+			draw->side_dist_x += draw->delta_dist_x;
+			draw->map_x += draw->step_x;
 			draw->side = 0;
 		}
 		else
 		{
-			draw->sideDistY += draw->deltaDistY;
-			draw->mapY += draw->stepY;
+			draw->side_dist_y += draw->delta_dist_y;
+			draw->map_y += draw->step_y;
 			draw->side = 1;
 		}
-		if (map[draw->mapX][draw->mapY] == '1')
+		if (map[draw->map_x][draw->map_y] == '1')
 			draw->hit = 1;
 	}
 }
@@ -60,53 +62,53 @@ void	dda(t_draw *draw, char **map)
 void	fish_eye__height_wall(t_draw *draw, t_player *player, int sheight)
 {
 	if (draw->side == 0)
-		draw->perpWallDist = (draw->mapX - player->posX + (1 - draw->stepX) / 2)
-		/ draw->rayDirX;
+		draw->perp_wall_dist = (draw->map_x - player->pos_x
+			+ (1 - draw->step_x) / 2) / draw->ray_dir_x;
 	else
-		draw->perpWallDist = (draw->mapY - player->posY + (1 - draw->stepY) / 2)
-		/ draw->rayDirY;
-	draw->lineHeight = (int)(sheight / draw->perpWallDist);
-	draw->drawStart = -draw->lineHeight / 2 + sheight / 2;
-	if (draw->drawStart < 0)
-		draw->drawStart = 0;
-	draw->drawEnd = draw->lineHeight / 2 + sheight / 2;
-	if (draw->drawEnd >= sheight)
-		draw->drawEnd = sheight - 1;
+		draw->perp_wall_dist = (draw->map_y - player->pos_y
+			+ (1 - draw->step_y) / 2) / draw->ray_dir_y;
+	draw->line_height = (int)(sheight / draw->perp_wall_dist);
+	draw->draw_start = -draw->line_height / 2 + sheight / 2;
+	if (draw->draw_start < 0)
+		draw->draw_start = 0;
+	draw->draw_end = draw->line_height / 2 + sheight / 2;
+	if (draw->draw_end >= sheight)
+		draw->draw_end = sheight - 1;
 	if (draw->side == 0)
-		draw->wallX = player->posY + draw->perpWallDist *
-		draw->rayDirY;
+		draw->wall_x = player->pos_y + draw->perp_wall_dist *
+		draw->ray_dir_y;
 	else
-		draw->wallX = player->posX + draw->perpWallDist *
-		draw->rayDirX;
-	draw->wallX -= floor((draw->wallX));
+		draw->wall_x = player->pos_x + draw->perp_wall_dist *
+		draw->ray_dir_x;
+	draw->wall_x -= floor((draw->wall_x));
 }
 
 void	tex_size(t_draw *draw, int width, int height)
 {
-	draw->texX = (int)(draw->wallX * (double)(width));
-	if (draw->side == 0 && draw->rayDirX > 0)
-		draw->texX = width - draw->texX - 1;
-	if (draw->side == 1 && draw->rayDirY < 0)
-		draw->texX = width - draw->texX - 1;
-	draw->step = 1.0 * height / draw->lineHeight;
+	draw->tex_x = (int)(draw->wall_x * (double)(width));
+	if (draw->side == 0 && draw->ray_dir_x > 0)
+		draw->tex_x = width - draw->tex_x - 1;
+	if (draw->side == 1 && draw->ray_dir_y < 0)
+		draw->tex_x = width - draw->tex_x - 1;
+	draw->step = 1.0 * height / draw->line_height;
 }
 
-void	texture(t_cub3D *cub)
+void	texture(t_cub3d *cub)
 {
 	if (cub->draw.side == 1)
 	{
-		if (cub->draw.stepY > 0)
-			tex_size(&cub->draw, cub->textEA.width, cub->textEA.height);
-		else if (cub->draw.stepY < 0)
-			tex_size(&cub->draw, cub->textWE.width, cub->textWE.height);
+		if (cub->draw.step_y > 0)
+			tex_size(&cub->draw, cub->text_ea.width, cub->text_ea.height);
+		else if (cub->draw.step_y < 0)
+			tex_size(&cub->draw, cub->text_we.width, cub->text_we.height);
 	}
 	else
 	{
-		if (cub->draw.stepX > 0)
-			tex_size(&cub->draw, cub->textNO.width, cub->textNO.height);
-		else if (cub->draw.stepX < 0)
-			tex_size(&cub->draw, cub->textSO.width, cub->textSO.height);
+		if (cub->draw.step_x > 0)
+			tex_size(&cub->draw, cub->text_no.width, cub->text_no.height);
+		else if (cub->draw.step_x < 0)
+			tex_size(&cub->draw, cub->text_so.width, cub->text_so.height);
 	}
-	cub->draw.texPos = (cub->draw.drawStart - cub->pars.sHeight / 2 +
-	cub->draw.lineHeight / 2) * cub->draw.step;
+	cub->draw.tex_pos = (cub->draw.draw_start - cub->pars.s_height / 2 +
+	cub->draw.line_height / 2) * cub->draw.step;
 }

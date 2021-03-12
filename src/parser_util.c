@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 19:57:52 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/09 11:52:26 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 09:35:29 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		check_one(char *line)
 	return (0);
 }
 
-void	free_array(t_cub3D *cub, char ***mas)
+void	free_array(t_cub3d *cub, char ***mas)
 {
 	int	i;
 
@@ -51,7 +51,7 @@ int		check_mas(char **mas)
 	return (0);
 }
 
-int		quit(int keycode, t_cub3D *cub)
+int		quit(int keycode, t_cub3d *cub)
 {
 	(void)keycode;
 	(void)cub;
