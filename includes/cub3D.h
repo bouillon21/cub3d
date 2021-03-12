@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 13:50:44 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/12 09:55:34 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 10:37:24 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int				press_key(int keycode, t_cub3d *cub);
 
 int				check_one(char *line);
 int				check_mas(char **mas);
-void			free_array(t_cub3d *cub, char ***mas);
+void			free_array(char ***mas);
 void			error_message(char *str);
 int				quit(int keycode, t_cub3d *cub);
 

@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/21 14:21:32 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/12 09:38:42 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 10:38:37 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	dir_player(t_cub3d *cub, char dir)
 	}
 }
 
-void	pos_player_sprite(t_cub3d *cub, char **map, int i, int j)
+void	pos_player_sprite(t_cub3d *cub, int i, int j)
 {
 	static int	count;
 
@@ -117,7 +117,7 @@ void	valid_map(t_cub3d *cub)
 		{
 			if (ft_strchr("02NEWS", cub->pars.map[i][j]))
 				check_valid(cub->pars.map, i, j);
-			pos_player_sprite(cub, cub->pars.map, i, j);
+			pos_player_sprite(cub, i, j);
 			if (!ft_strchr("012NEWS ", cub->pars.map[i][j]))
 				error_message("map");
 		}

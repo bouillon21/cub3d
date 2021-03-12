@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/12 09:55:31 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 10:48:16 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	map(t_cub3d *cub, t_list **head, int size)
 {
 	t_list	*tmp;
-	char	*line;
 	int		i;
 
 	i = 0;
@@ -78,7 +77,7 @@ void	parser(t_cub3d *cub)
 		{
 			mas = ft_split(line, ' ');
 			switch_param(cub, mas, &sum);
-			free_array(cub, &mas);
+			free_array(&mas);
 		}
 		else
 		{
