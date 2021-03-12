@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/20 17:35:40 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/12 10:48:16 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 14:56:05 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	parser(t_cub3d *cub)
 	static int	sum;
 
 	line = NULL;
-	while (get_next_line(cub->pars.fd, &line))
+	while ((get_next_line(cub->pars.fd, &line)) != -1)
 	{
 		if (line[0] != '1' && !check_one(line))
 		{

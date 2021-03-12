@@ -6,7 +6,7 @@
 /*   By: cshelli <cshelli@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/12 19:13:49 by cshelli           #+#    #+#             */
-/*   Updated: 2021/03/12 10:25:03 by cshelli          ###   ########.fr       */
+/*   Updated: 2021/03/12 14:55:09 by cshelli          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int		main(int argc, char **argv)
 	t_cub3d	cub;
 
 	valid_arg(&cub, argc, argv);
-	cub.pars.fd = open(argv[1], O_RDONLY);
+	if ((cub.pars.fd = open(argv[1], O_RDONLY)) == -1)
+		error_message("config file");
 	cub_init(&cub);
 	parser(&cub);
 	cub.canvas.mlx = mlx_init();
